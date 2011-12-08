@@ -1,0 +1,45 @@
+0.7 - 2011-12-09 00:10
+===
+
+    * change name to MooX::Options
+    * fix Global name (UPPERCASE)
+    * fix Global name (Camel_Case)
+    * fix private name (no more "_")
+
+0.6 - 2011-12-04 13:00
+===
+
+    * add option_usage
+      add test for it
+
+0.5 - 2011-12-04 12:20
+===
+
+    * fix doc
+
+0.4 - 2011-12-04 12:00
+===
+
+    * fix call chain method (don't call properly because new method was not already generated at the call)
+      add test for chain_method (should_die_ok)
+
+0.3 - 2011-12-03 13:00
+===
+
+    * fix test unit
+
+0.2 - 2011-12-02 01:30
+===
+    * improve help test
+    * fix possible miss reading
+    * Factorize test import_options rename options for import_options (better reading) remove synopsis filter is on by default, can be cancel with \"nofilter\" import doc at the end
+    * add TODO
+    * fix tests for autosplit, add complex autosplit for str with quote
+    * add some better handle of repeatable and negativable, use Data::Record to resplit the args
+
+0.1 - 2011-11-30 18:30
+===
+
+    * First release of MooX::Getopt
+    Fully compatible with Mo/Moo/Mouse/Moose and more
+
