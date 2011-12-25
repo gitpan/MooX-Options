@@ -14,7 +14,7 @@ my %module_build_args = (
     "Mo" => 0,
     "Module::Build" => "0.3601",
     "Module::Load::Conditional" => 0,
-    "Moo" => 0,
+    "Moo" => "0.009013",
     "Moose" => 0,
     "Mouse" => 0,
     "Scalar::Util" => 0,
@@ -31,7 +31,7 @@ my %module_build_args = (
     "Geistteufel <geistteufel\@celogeek.fr>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "0.7",
+  "dist_version" => "0.8",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
