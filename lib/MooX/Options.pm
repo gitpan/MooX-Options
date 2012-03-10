@@ -12,7 +12,7 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '0.9';    # VERSION
+our $VERSION = '1.0';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long::Descriptive;
@@ -86,9 +86,11 @@ sub import {
             my $name_format = join "=",
                 grep { defined $_ } $name_long_and_short, $options{format};
 
-            push @Options,
-                [ $name_format, $options{doc} // "no doc for $name" ]
-                ;    # prepare option for getopt
+            #doc
+            my $doc
+                = defined $options{doc} ? $options{doc} : "no doc for $name";
+
+            push @Options, [ $name_format, $doc ]; # prepare option for getopt
             push @Attributes, $name;    # save the attribute for later use
             push @Required_Attributes, $name
                 if $options{required};    # save the required attribute
@@ -195,7 +197,7 @@ MooX::Options - add option keywords to your Moo object
 
 =head1 VERSION
 
-version 0.9
+version 1.0
 
 =head1 MooX::Options
 
