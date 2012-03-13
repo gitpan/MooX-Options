@@ -12,7 +12,7 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '1.0';    # VERSION
+our $VERSION = '1.1';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long::Descriptive;
@@ -197,7 +197,7 @@ MooX::Options - add option keywords to your Moo object
 
 =head1 VERSION
 
-version 1.0
+version 1.1
 
 =head1 MooX::Options
 

@@ -7,12 +7,7 @@ build_requires:
   File::Find: 0
   File::Temp: 0
   FindBin: 0
-  Mo: 0
   Module::Build: 0.3601
-  Module::Load::Conditional: 0
-  Moo: 0.009013
-  Moose: 0
-  Mouse: 0
   Scalar::Util: 0
   Test::More: 0.94
   Test::Trap: 0
@@ -36,4 +31,4 @@ requires:
   perl: 5.006
   strict: 0
   warnings: 0
-version: 1.0
+version: 1.1
