@@ -5,14 +5,15 @@ MANIFEST
 META.yml
 README
 TODO
+coverage.txt
 dist.ini
 lib/MooX/Options.pm
-perlcriticrc
 perltidyrc
 t/00-compile.t
 t/000-report-versions.t
-t/author-critic.t
 t/base.st
+t/failure.t
+t/filter.t
 t/flavour.t
 t/mo.t
 t/moo.t

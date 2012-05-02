@@ -12,7 +12,7 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '1.1';    # VERSION
+our $VERSION = '1.2';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long::Descriptive;
@@ -35,7 +35,7 @@ sub import {
     my $caller = caller;
 
     #check options and definition
-    while ( my ( $key, $method ) = each %DEFAULT_OPTIONS ) {
+    while ( my ( $key, $method ) = each %import_options ) {
         croak "missing option $key, check doc to define one" unless $method;
         croak "method $method is not defined, check doc to use another name"
             if $key =~ /_chain_method$/ && !$caller->can($method);
@@ -60,6 +60,11 @@ sub import {
                 if $options{negativable} && $options{format};
             croak "Can't use option with help, it is implied by MooX::Options"
                 if $name eq 'help';
+            croak "Can't use option with "
+                . $import_options{option_method_name}
+                . "_usage, it is implied by MooX::Options"
+                if $name eq $import_options{option_method_name} 
+                    . "_usage";
 
             #fix missing option, autosplit implie repeatable
             $options{repeatable} = 1 if $options{autosplit};
@@ -101,7 +106,7 @@ sub import {
 
 #remove bad key for passing to chain_method(has), avoid warnings with Moo/Moose
 #by defaut, keep all key
-            unless ( $options{nofilter} ) {
+            unless ( $import_options{nofilter} ) {
                 delete $options{$_} for @FILTER;
                 @_ = ( $name, %options );
             }
@@ -129,6 +134,15 @@ sub import {
         no strict 'refs';
         *{"${caller}::$import_options{creation_method_name}"} = sub {
             my ( $self, %params ) = @_;
+
+            #ensure all method will be call properly
+            for my $attr (@Attributes) {
+                croak "attribute " 
+                    . $attr
+                    . " isn't defined. You have something wrong in your option_chain_method '"
+                    . $import_options{option_chain_method} . "'."
+                    unless $self->can($attr);
+            }
 
 #if autosplit attributes is present, search and replace in ARGV with full version
 #ex --test=1,2,3 become --test=1 --test=2 --test=3
@@ -167,7 +181,9 @@ sub import {
 
             #replace command line attribute in params if params not defined
             my @existing_attributes = grep {
-                $opt->can($_) && defined $opt->$_ && !exists $params{$_}
+                my $attr     = $_;
+                my $attr_val = $opt->$attr;
+                defined $attr_val && !exists $params{$attr}
             } @Attributes;
             @params{@existing_attributes} = @$opt{@existing_attributes};
 
@@ -197,7 +213,7 @@ MooX::Options - add option keywords to your Moo object
 
 =head1 VERSION
 
-version 1.1
+version 1.2
 
 =head1 MooX::Options
 
@@ -358,6 +374,25 @@ Ex :
 
   test --verbose --verbose
   => verbose = 2
+
+it is advisable to use a "default" option on the attribute for repeatable
+params so that they behave as arrays "out of the box" when used outside of
+command line context.
+
+Ex:
+    package t;
+    use Moo;
+    use MooX::Options;
+
+    option foo => (is => 'rw', format => 's@', default => sub { [] });
+    option bar => (is => 'rw', format => 'i@', default => sub { [] });
+
+    # this now works as expected and you will no longer see
+    # "Can't use an undefined value as an ARRAY reference"
+    my $t = t->new;
+    push @{ $t->foo }, 'abc123';
+
+    1;
 
 =item autosplit
 
