@@ -12,12 +12,13 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '1.2';    # VERSION
+our $VERSION = '1.3';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long::Descriptive;
 use Regexp::Common;
 use Data::Record;
+use 5.8.9;
 
 my %DEFAULT_OPTIONS = (
     'creation_chain_method' => 'new',
@@ -213,7 +214,7 @@ MooX::Options - add option keywords to your Moo object
 
 =head1 VERSION
 
-version 1.2
+version 1.3
 
 =head1 MooX::Options
 

@@ -14,8 +14,7 @@ my %module_build_args = (
     "Scalar::Util" => 0,
     "Test::More" => "0.94",
     "Test::Trap" => 0,
-    "Try::Tiny" => 0,
-    "perl" => "5.004"
+    "Try::Tiny" => 0
   },
   "configure_requires" => {
     "Module::Build" => "0.3601"
@@ -25,7 +24,7 @@ my %module_build_args = (
     "Geistteufel <geistteufel\@celogeek.fr>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "1.2",
+  "dist_version" => "1.3",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
@@ -36,7 +35,7 @@ my %module_build_args = (
     "Data::Record" => 0,
     "Getopt::Long::Descriptive" => 0,
     "Regexp::Common" => 0,
-    "perl" => "5.006",
+    "perl" => "v5.8.9",
     "strict" => 0,
     "warnings" => 0
   },

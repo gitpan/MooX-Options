@@ -11,11 +11,10 @@ build_requires:
   Test::More: 0.94
   Test::Trap: 0
   Try::Tiny: 0
-  perl: 5.004
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300015, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300016, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -27,7 +26,7 @@ requires:
   Data::Record: 0
   Getopt::Long::Descriptive: 0
   Regexp::Common: 0
-  perl: 5.006
+  perl: v5.8.9
   strict: 0
   warnings: 0
-version: 1.2
+version: 1.3
