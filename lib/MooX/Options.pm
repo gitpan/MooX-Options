@@ -12,13 +12,14 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '1.3';    # VERSION
+
+our $VERSION = '1.4';    # VERSION
 use Carp;
 use Data::Dumper;
-use Getopt::Long::Descriptive;
+use Getopt::Long 2.38;
+use Getopt::Long::Descriptive 0.091;
 use Regexp::Common;
 use Data::Record;
-use 5.8.9;
 
 my %DEFAULT_OPTIONS = (
     'creation_chain_method' => 'new',
@@ -55,7 +56,8 @@ sub import {
         #keyword option
         no strict 'refs';
         *{"${caller}::$import_options{option_method_name}"} = sub {
-            my ( $name, %options ) = @_;
+            my ( $name, %orig_options ) = @_;
+            my %options = %orig_options;
             croak
                 "Negativable params is not usable with non boolean value, don't pass format to use it !"
                 if $options{negativable} && $options{format};
@@ -108,14 +110,14 @@ sub import {
 #remove bad key for passing to chain_method(has), avoid warnings with Moo/Moose
 #by defaut, keep all key
             unless ( $import_options{nofilter} ) {
-                delete $options{$_} for @FILTER;
-                @_ = ( $name, %options );
+                delete $orig_options{$_} for @FILTER;
             }
 
             #chain to chain_method (has)
+            my $chain_method_name = $import_options{option_chain_method};
             my $chain_method
-                = $caller->can( $import_options{option_chain_method} );
-            goto &$chain_method;
+                = eval "package ${caller}; sub {${chain_method_name}(\@_)}";
+            $chain_method->( $name, %orig_options );
         };
     }
 
@@ -194,12 +196,9 @@ sub import {
             $usage_method->( 1, map {"$_ is missing"} @missing_params )
                 if @missing_params;
 
-            #call creation_method
-            @_ = ( $self, %params );
-
-            my $creation_method
-                = $caller->can( $import_options{creation_chain_method} );
-            goto &$creation_method;
+            my $creation_method_name = $import_options{creation_chain_method};
+            my $creation_method      = $caller->can($creation_method_name);
+            $creation_method->( $self, %params );
         };
     }
 }
@@ -214,7 +213,7 @@ MooX::Options - add option keywords to your Moo object
 
 =head1 VERSION
 
-version 1.3
+version 1.4
 
 =head1 MooX::Options
 
