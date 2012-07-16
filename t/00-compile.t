@@ -63,7 +63,6 @@ my $plan = scalar(@modules) + scalar(@scripts);
 $plan ? ( plan tests => $plan ) : ( plan skip_all => "no tests to run" );
 
 {
-
     # fake home for cpan-testers
     # no fake requested ## local $ENV{HOME} = tempdir( CLEANUP => 1 );
 
