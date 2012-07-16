@@ -40,7 +40,7 @@ resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://github.com/celogeek/MooX-Options/wiki
   repository: git://github.com/celogeek/MooX-Options.git
-version: 1.7
+version: 1.8
 x_Dist_Zilla:
   plugins:
     -
@@ -163,6 +163,10 @@ x_Dist_Zilla:
       class: Dist::Zilla::Plugin::Test::UnusedVars
       name: '@Author::Celogeek/Test::UnusedVars'
       version: 2.000003
+    -
+      class: Dist::Zilla::Plugin::PodCoverageTests
+      name: '@Author::Celogeek/PodCoverageTests'
+      version: 4.300020
     -
       class: Dist::Zilla::Plugin::PruneFiles
       name: '@Author::Celogeek/PruneFiles'
