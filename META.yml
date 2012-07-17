@@ -1,5 +1,5 @@
 ---
-abstract: 'add option keywords to your Moo object'
+abstract: 'add option keywords to your object (Mo/Moo/Mouse/Moose and any others)'
 author:
   - 'celogeek <me@celogeek.com>'
 build_requires:
@@ -40,7 +40,7 @@ resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://github.com/celogeek/MooX-Options/wiki
   repository: git://github.com/celogeek/MooX-Options.git
-version: 2.0
+version: 2.1
 x_Dist_Zilla:
   plugins:
     -

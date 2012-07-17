@@ -25,12 +25,12 @@ my %module_build_args = (
   "configure_requires" => {
     "Module::Build" => "0.3601"
   },
-  "dist_abstract" => "add option keywords to your Moo object",
+  "dist_abstract" => "add option keywords to your object (Mo/Moo/Mouse/Moose and any others)",
   "dist_author" => [
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "2.0",
+  "dist_version" => "2.1",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},

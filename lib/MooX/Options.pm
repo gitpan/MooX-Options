@@ -8,12 +8,12 @@
 #
 package MooX::Options;
 
-# ABSTRACT: add option keywords to your Moo object
+# ABSTRACT: add option keywords to your object (Mo/Moo/Mouse/Moose and any others)
 
 use strict;
 use warnings;
 
-our $VERSION = '2.0';    # VERSION
+our $VERSION = '2.1';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long 2.38;
@@ -222,11 +222,11 @@ sub import {
 
 =head1 NAME
 
-MooX::Options - add option keywords to your Moo object
+MooX::Options - add option keywords to your object (Mo/Moo/Mouse/Moose and any others)
 
 =head1 VERSION
 
-version 2.0
+version 2.1
 
 =head1 MooX::Options
 
