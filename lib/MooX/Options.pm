@@ -13,7 +13,7 @@ package MooX::Options;
 use strict;
 use warnings;
 
-our $VERSION = '1.8';    # VERSION
+our $VERSION = '1.9';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long 2.38;
@@ -223,7 +223,7 @@ MooX::Options - add option keywords to your Moo object
 
 =head1 VERSION
 
-version 1.8
+version 1.9
 
 =head1 MooX::Options
 
@@ -467,12 +467,6 @@ Ex :
 =item Matt S. Trout (mst) <mst@shadowcat.co.uk> : For his patience and advice.
 
 =back
-
-=head1 BUGS
-
-Any bugs or evolution can be submit here :
-
-L<Github|https://github.com/celogeek/MooX-Options>
 
 =head1 BUGS
 
