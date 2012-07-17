@@ -13,7 +13,7 @@ package MooX::Options;
 use strict;
 use warnings;
 
-our $VERSION = '1.9';    # VERSION
+our $VERSION = '2.0';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long 2.38;
@@ -97,7 +97,10 @@ sub import {
             grep { defined $_ } $name_long_and_short, $options{format};
 
         #doc
-        my $doc = defined $options{doc} ? $options{doc} : "no doc for $name";
+        my $doc
+            = defined $options{doc}           ? $options{doc}
+            : defined $options{documentation} ? $options{documentation}
+            :                                   "no doc for $name";
 
         push @Options, [ $name_format, $doc ];    # prepare option for getopt
         push @Attributes,          $name;   # save the attribute for later use
@@ -223,7 +226,7 @@ MooX::Options - add option keywords to your Moo object
 
 =head1 VERSION
 
-version 1.9
+version 2.0
 
 =head1 MooX::Options
 
@@ -346,6 +349,12 @@ Ex:
 =item doc
 
 Specified the documentation for the attribute
+
+=item documentation
+
+Specified the documentation for the attribute. It is usefull if you chain with other module like L<MooseX::App::Cmd> that use this attribute.
+
+If doc attribute is defined, this one will be ignored.
 
 =item required
 

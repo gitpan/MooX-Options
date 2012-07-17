@@ -30,7 +30,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "1.9",
+  "dist_version" => "2.0",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
