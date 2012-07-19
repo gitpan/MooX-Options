@@ -13,7 +13,7 @@ package MooX::Options;
 use strict;
 use warnings;
 
-our $VERSION = '2.1';    # VERSION
+our $VERSION = '2.2';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long 2.38;
@@ -226,7 +226,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Mouse/Moose and any o
 
 =head1 VERSION
 
-version 2.1
+version 2.2
 
 =head1 MooX::Options
 
