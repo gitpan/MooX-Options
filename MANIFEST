@@ -9,6 +9,7 @@ coverage.txt
 dist.ini
 failure/failure-with-mouse.pl
 lib/MooX/Options.pm
+lib/MooX/Options/Role.pm
 t/00-compile.t
 t/000-report-versions.t
 t/author-critic.t
@@ -23,5 +24,6 @@ t/moose.t
 t/mouse.t
 t/release-pod-coverage.t
 t/release-unused-vars.t
+t/role.t
 xt/perlcritic.rc
 xt/perltidy.rc

@@ -13,7 +13,7 @@ package MooX::Options;
 use strict;
 use warnings;
 
-our $VERSION = '2.2';    # VERSION
+our $VERSION = '2.3';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long 2.38;
@@ -211,6 +211,12 @@ sub import {
             *{"${caller}::$meth"} = $sub_ref->{$meth};
         }
         ## use critic
+
+        #Save option name for MooX::Options::Role
+        ## no critic qw(ProhibitPackageVars)
+        $caller::MooX_Options_Option_Name
+            = $import_options{option_method_name};
+        ## use critic
     }
 
     return;
@@ -226,7 +232,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Mouse/Moose and any o
 
 =head1 VERSION
 
-version 2.2
+version 2.3
 
 =head1 MooX::Options
 

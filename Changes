@@ -1,3 +1,9 @@
+2.3       2012-07-25 18:48:47 Europe/Paris
+
+    Add MooX::Options::Role 
+        You can create role in your module that automatically call MooX::Option
+        'option' method when the role is imported.
+
 2.2       2012-07-19 12:52:59 Europe/Paris
 
     Fix test for Moo 1.0
