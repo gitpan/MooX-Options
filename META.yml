@@ -33,14 +33,14 @@ requires:
   Getopt::Long: 2.38
   Getopt::Long::Descriptive: 0.091
   Regexp::Common: 0
-  perl: 5.006
+  perl: 5.010
   strict: 0
   warnings: 0
 resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://github.com/celogeek/MooX-Options/wiki
   repository: git://github.com/celogeek/MooX-Options.git
-version: 2.3
+version: 2.4
 x_Dist_Zilla:
   plugins:
     -

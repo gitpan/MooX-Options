@@ -13,7 +13,7 @@ package MooX::Options;
 use strict;
 use warnings;
 
-our $VERSION = '2.3';    # VERSION
+our $VERSION = '2.4';    # VERSION
 use Carp;
 use Data::Dumper;
 use Getopt::Long 2.38;
@@ -36,16 +36,16 @@ my @FILTER = qw/format short repeatable negativable autosplit doc/;
 sub import {
     my ( undef, %import_params ) = @_;
     my (%import_options) = ( %DEFAULT_OPTIONS, %import_params );
-    my $caller = caller;
+    my $package = caller;
 
     #check options and definition
     while ( my ( $key, $method ) = each %import_options ) {
         croak "missing option $key, check doc to define one"
             unless defined $method;
         croak "method $method is not defined, check doc to use another name"
-            if $key =~ /_chain_method$/x && !$caller->can($method);
+            if $key =~ /_chain_method$/x && !$package->can($method);
         croak "method $method already defined, check doc to use another name"
-            if $key =~ /_method_name$/x && $caller->can($method);
+            if $key =~ /_method_name$/x && $package->can($method);
     }
 
     my @Options              = ('USAGE: %c %o');
@@ -121,7 +121,7 @@ sub import {
         my $chain_method_name = $import_options{option_chain_method};
         ## no critic qw(ProhibitStringyEval)
         my $chain_method
-            = eval "package ${caller}; sub {${chain_method_name}(\@_)}";
+            = eval "package ${package}; sub {${chain_method_name}(\@_)}";
         ## use critic
         $chain_method->( $name, %orig_options );
     };
@@ -199,7 +199,7 @@ sub import {
             if @missing_params;
 
         my $creation_method_name = $import_options{creation_chain_method};
-        my $creation_method      = $caller->can($creation_method_name);
+        my $creation_method      = $package->can($creation_method_name);
         $creation_method->( $self, %params );
     };
 
@@ -208,13 +208,13 @@ sub import {
         ## no critic qw(ProhibitNoStrict)
         no strict qw/refs/;
         for my $meth ( keys %$sub_ref ) {
-            *{"${caller}::$meth"} = $sub_ref->{$meth};
+            *{"${package}::$meth"} = $sub_ref->{$meth};
         }
         ## use critic
 
         #Save option name for MooX::Options::Role
         ## no critic qw(ProhibitPackageVars)
-        $caller::MooX_Options_Option_Name
+        ${"${package}::_MooX_Options_Option_Name"}
             = $import_options{option_method_name};
         ## use critic
     }
@@ -232,7 +232,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Mouse/Moose and any o
 
 =head1 VERSION
 
-version 2.3
+version 2.4
 
 =head1 MooX::Options
 
@@ -304,9 +304,9 @@ First of all, I use L<Getopt::Long::Descriptive>. Everything will be pass to the
     package t;
     use Moo;
     use MooX::Options;
-    
+
     option 'test' => (is => 'ro');
-    
+
     1;
 
     my $t = t->new_with_options(); #parse @ARGV
@@ -435,11 +435,11 @@ Ex :
     package t;
     use Moo;
     use MooX::Options;
-    
+
     option test => (is => 'ro', format => 'i@', autosplit => ',');
     #same as : option test => (is => 'ro', format => 'i', autosplit => ',');
     1;
-    
+
     @ARGV=('--test=1,2,3,4');
     my $t = t->new_with_options;
     t->test # [1,2,3,4]
@@ -451,7 +451,7 @@ I automatically take the quoted as a group separator value
     use MooX::Options;
     option test => (is => 'ro', format => 's', repeatable => 1, autosplit => ',');
     1;
-    
+
     @ARGV=('--test=a,b,"c,d",e');
     my $t = str->new_with_options;
     t->test # ['a','b','c,d','e']
@@ -465,9 +465,9 @@ Ex :
     package t;
     use Moo;
     use MooX::Options;
-    
+
     option 'verbose' => (is => 'ro', repeatable => 1, short => 'v');
-    
+
     1;
     @ARGV=('-vvv');
     my $t = t->new_with_options;

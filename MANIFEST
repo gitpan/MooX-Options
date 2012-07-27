@@ -8,6 +8,7 @@ README.mkdn
 coverage.txt
 dist.ini
 failure/failure-with-mouse.pl
+feature/better_way_for_supporting_role
 lib/MooX/Options.pm
 lib/MooX/Options/Role.pm
 t/00-compile.t

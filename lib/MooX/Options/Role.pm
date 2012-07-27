@@ -11,38 +11,44 @@ package MooX::Options::Role;
 # ABSTRACT: create role with option
 use strict;
 use warnings;
-our $VERSION = '2.3';    # VERSION
+our $VERSION = '2.4';    # VERSION
 use Carp;
 
-my %Options;
-
 sub import {
+    ## no critic qw(ProhibitPackageVars)
+    my $package_role         = caller;
+    my $package_role_options = do {
+        ## no critic qw(ProhibitNoStrict)
+        no strict qw/refs/;
+        ${"${package_role}::_MooX_Options_Option_Spec"} //= {};
+    };
+
     my $option_role_meth = sub {
         my ( $name, %options ) = @_;
-        $Options{$name} = \%options;
+        $package_role_options->{$name} = \%options;
     };
 
     my $import_meth = sub {
-        my $caller = caller;
-        ## no critic qw(ProhibitPackageVars)
-        my $option_meth_name = $caller::MooX_Options_Option_Name;
-        ## use critic
-        croak "MooX::Options should be import before using this role"
+        my $package          = caller;
+        my $option_meth_name = do {
+            ## no critic qw(ProhibitNoStrict)
+            no strict qw/refs/;
+            ${"${package}::_MooX_Options_Option_Name"};
+        };
+        croak "MooX::Options should be import before using this role."
             unless defined $option_meth_name;
-        my $option_meth = $caller->can($option_meth_name);
-        for my $name ( keys %Options ) {
-            my %option = %{ $Options{$name} };
+        my $option_meth = $package->can($option_meth_name);
+        for my $name ( keys %$package_role_options ) {
+            my %option = %{ $package_role_options->{$name} };
             $option_meth->( $name, %option );
         }
     };
 
-    my $caller = caller;
     {
         ## no critic qw(ProhibitNoStrict)
         no strict qw/refs/;
-        *{"${caller}::option"} = $option_role_meth;
-        *{"${caller}::import"} = $import_meth;
-        ## use critic
+        *{"${package_role}::option"} = $option_role_meth;
+        *{"${package_role}::import"} = $import_meth;
     }
     return;
 }
@@ -58,7 +64,7 @@ MooX::Options::Role - create role with option
 
 =head1 VERSION
 
-version 2.3
+version 2.4
 
 =head1 SYNOPSIS
 

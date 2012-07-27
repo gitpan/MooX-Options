@@ -30,7 +30,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "2.3",
+  "dist_version" => "2.4",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
@@ -42,7 +42,7 @@ my %module_build_args = (
     "Getopt::Long" => "2.38",
     "Getopt::Long::Descriptive" => "0.091",
     "Regexp::Common" => 0,
-    "perl" => "5.006",
+    "perl" => "5.010",
     "strict" => 0,
     "warnings" => 0
   },
