@@ -18,78 +18,153 @@ use Try::Tiny;
 
 BEGIN {
     use Module::Load::Conditional qw/check_install/;
-    plan skip_all => 'Need Moo for this test'
-        unless check_install( module => 'Moo' );
+    plan skip_all => 'Need Mo for this test'
+        unless check_install( module => 'Mo' );
 }
 
 {
 
-    package t;
-    use Moo;
+    package tRole;
+    use Moo::Role;
+    use Mo;
     use MooX::Options;
 
     option 'bool'    => ( is => 'ro' );
     option 'counter' => ( is => 'ro', repeatable => 1 );
     option 'empty'   => ( is => 'ro', negativable => 1 );
     option 'split'   => ( is => 'ro', format => 'i@', autosplit => ',' );
+    1;
+}
+{
+
+    package t;
+    use Mo;
+    use Role::Tiny::With;
+    with 'tRole';
 
     1;
 }
 
 {
 
-    package r;
-    use Moo;
+    package rRole;
+    use Moo::Role;
+    use Mo;
     use MooX::Options;
 
     option 'str_req' => ( is => 'ro', format => 's', required => 1 );
 
     1;
 }
+{
+
+    package r;
+    use Mo;
+    use Role::Tiny::With;
+    with 'rRole';
+
+    1;
+}
 
 {
 
-    package sp_str;
-    use Moo;
+    package sp_strRole;
+    use Moo::Role;
+    use Mo;
     use MooX::Options;
 
     option 'split_str' => ( is => 'ro', format => 's', autosplit => "," );
 
     1;
 }
-
 {
 
-    package d;
-    use Moo;
-    use MooX::Options;
-    option 'should_die_ok' =>
-        ( is => 'ro', isa => sub { die "this will die ok" } );
+    package sp_str;
+    use Mo;
+    use Role::Tiny::With;
+    with 'sp_strRole';
+
     1;
 }
 
 {
 
-    package multi_req;
-    use Moo;
+    package dRole;
+    use Moo::Role;
+    use Mo 'coerce';
+    use MooX::Options;
+    option 'should_die_ok' =>
+        ( is => 'ro', coerce => sub { die "this will die ok" } );
+    1;
+}
+{
+
+    package d;
+    use Mo 'coerce';
+    use Role::Tiny::With;
+    with 'dRole';
+    1;
+}
+
+{
+
+    package multi_reqRole;
+    use Moo::Role;
+    use Mo;
     use MooX::Options;
     option 'multi_1' => ( is => 'ro', required => 1 );
     option 'multi_2' => ( is => 'ro', required => 1 );
     option 'multi_3' => ( is => 'ro', required => 1 );
     1;
 }
+{
+
+    package multi_req;
+    use Mo;
+    use Role::Tiny::With;
+    with 'multi_reqRole';
+    1;
+}
 
 {
 
-    package t_doc;
-    use Moo;
+    package t_docRole;
+    use Moo::Role;
+    use Mo;
     use MooX::Options;
     option 't' => ( is => 'ro', doc => 'this is a test' );
     1;
 }
+{
 
-subtest "Moo" => sub {
-    note "Test Moo";
+    package t_doc;
+    use Mo;
+    use Role::Tiny::With;
+    with 't_docRole';
+    1;
+}
+
+{
+
+    package t_shortRole;
+    use Moo::Role;
+    use Mo;
+    use MooX::Options;
+    option 'verbose' => ( is => 'ro', short => 'v' );
+    1;
+}
+
+{
+
+    package t_short;
+    use Mo;
+    use Role::Tiny::With;
+    with 't_shortRole';
+    1;
+}
+
+subtest "Mo" => sub {
+    note "Test Mo";
     require $RealBin . '/base.st';
 };
 

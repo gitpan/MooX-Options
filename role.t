@@ -20,7 +20,8 @@ use Try::Tiny;
     package myRole;
     use strict;
     use warnings;
-    use MooX::Options::Role;
+    use Moo::Role;
+    use MooX::Options;
 
     option 'multi' => ( is => 'rw', doc => 'multi threading mode' );
     1;
@@ -30,8 +31,7 @@ use Try::Tiny;
 
     package testRole;
     use Moo;
-    use MooX::Options;
-    myRole->import;
+    with 'myRole';
     1;
 }
 
@@ -47,7 +47,7 @@ use Try::Tiny;
     my $opt = testRole->new_with_options;
     ok( $opt->multi, 'multi set' );
     trap {
-        $opt->option_usage;
+        $opt->options_usage;
     };
     ok( $trap->stdout =~ /\-\-multi\s+multi\sthreading\smode/x,
         "usage method is properly set" );
