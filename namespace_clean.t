@@ -22,3 +22,4 @@ ok Foo->new, 'Foo is a package';
 }
 
 done_testing;
+
