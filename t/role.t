@@ -18,7 +18,7 @@ use Test::Trap;
     use strict;
     use warnings;
     use Moo::Role;
-    use MooX::Options t => 1;
+    use MooX::Options;
 
     option 'multi' => ( is => 'rw', doc => 'multi threading mode' );
     1;
@@ -28,6 +28,16 @@ use Test::Trap;
 
     package testRole;
     use Moo;
+    use MooX::Options;
+    with 'myRole';
+    1;
+}
+
+{
+
+    package testRole2;
+    use Moo;
+    use MooX::Options skip_options => undef;
     with 'myRole';
     1;
 }
@@ -36,7 +46,9 @@ use Test::Trap;
 
     package testSkipOpt;
     use Moo;
-    use MooX::Options skip_options => [qw/multi/], u => 2;
+    use MooX::Options
+        skip_options => [qw/multi/],
+        flavour      => [qw( pass_through )];
     with 'myRole';
     1;
 }
@@ -59,7 +71,23 @@ use Test::Trap;
         "usage method is properly set" );
 }
 {
-    local $TODO = "Role not fully functional ...";
+    local @ARGV;
+    @ARGV = ();
+    my $opt = testRole2->new_with_options;
+    ok( !$opt->multi, 'multi not set' );
+}
+{
+    local @ARGV;
+    @ARGV = ('--multi');
+    my $opt = testRole2->new_with_options;
+    ok( $opt->multi, 'multi set' );
+    trap {
+        $opt->options_usage;
+    };
+    ok( $trap->stdout =~ /\-\-multi\s+multi\sthreading\smode/x,
+        "usage method is properly set" );
+}
+{
     local @ARGV;
     @ARGV = ('--multi');
     my $opt = testSkipOpt->new_with_options;
