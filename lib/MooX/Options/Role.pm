@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.5';    # VERSION
+our $VERSION = '3.6';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -68,15 +68,19 @@ sub parse_options {
         my @new_argv;
 
         #parse all argv
-        for my $arg (@ARGV) {
+        for my $i ( 0 .. $#ARGV ) {
+            my $arg = $ARGV[$i];
             my ( $arg_name, $arg_values ) = split( /=/x, $arg, 2 );
             $arg_name =~ s/^--?//x;
+            unless ( defined $arg_values ) {
+                $arg_values = $ARGV[ ++$i ];
+            }
             if ( my $rec = $has_to_split{$arg_name} ) {
                 foreach my $record ( $rec->records($arg_values) ) {
 
                     #remove the quoted if exist to chain
                     $record =~ s/^['"]|['"]$//gx;
-                    push @new_argv, "--$arg_name=$record";
+                    push @new_argv, "--$arg_name", $record;
                 }
             }
             else {
@@ -144,7 +148,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.5
+version 3.6
 
 =head1 METHODS
 
