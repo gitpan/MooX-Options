@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.6';    # VERSION
+our $VERSION = '3.7';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -140,6 +140,7 @@ sub options_usage {
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -148,7 +149,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.6
+version 3.7
 
 =head1 METHODS
 
@@ -195,4 +196,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

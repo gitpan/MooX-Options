@@ -38,13 +38,13 @@ resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://github.com/celogeek/MooX-Options/wiki
   repository: git://github.com/celogeek/MooX-Options.git
-version: 3.6
+version: 3.7
 x_Dist_Zilla:
   plugins:
     -
       class: Dist::Zilla::Plugin::Git::NextVersion
       name: '@Author::Celogeek/Git::NextVersion'
-      version: 1.121820
+      version: 1.122460
     -
       class: Dist::Zilla::Plugin::NextRelease
       name: '@Author::Celogeek/NextRelease'
@@ -52,19 +52,19 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Git::Check
       name: '@Author::Celogeek/@Git/Check'
-      version: 1.121820
+      version: 1.122460
     -
       class: Dist::Zilla::Plugin::Git::Commit
       name: '@Author::Celogeek/@Git/Commit'
-      version: 1.121820
+      version: 1.122460
     -
       class: Dist::Zilla::Plugin::Git::Tag
       name: '@Author::Celogeek/@Git/Tag'
-      version: 1.121820
+      version: 1.122460
     -
       class: Dist::Zilla::Plugin::Git::Push
       name: '@Author::Celogeek/@Git/Push'
-      version: 1.121820
+      version: 1.122460
     -
       class: Dist::Zilla::Plugin::GatherDir
       name: '@Author::Celogeek/@Filter/GatherDir'

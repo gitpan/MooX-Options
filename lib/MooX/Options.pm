@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.6';    # VERSION
+our $VERSION = '3.7';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc/;
 
@@ -66,10 +66,9 @@ sub import {
         ## use critic
     }
 
-    my $options_data = {};
-    my $modifier_done;
+    my $options_data    = {};
     my $apply_modifiers = sub {
-        return if $modifier_done;
+        return if $target->can('new_with_options');
         $with->('MooX::Options::Role');
 
         $around->(
@@ -78,8 +77,6 @@ sub import {
                 return ( $self->$orig(@_), %$options_data );
             }
         );
-
-        $modifier_done = 1;
     };
 
     my $option = sub {
@@ -107,6 +104,8 @@ sub import {
     }
 
     { no strict 'refs'; *{"${target}::option"} = $option; }
+
+    $apply_modifiers->();
 
     return;
 }
@@ -140,6 +139,8 @@ sub _validate_and_filter_options {
 
 1;
 
+__END__
+
 =pod
 
 =head1 NAME
@@ -148,7 +149,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.6
+version 3.7
 
 =head1 MooX::Options
 
@@ -466,6 +467,8 @@ L<http://perltalks.celogeek.com/slides/2012/08/moox-options-slide3d.html>
 
 =item Tomas Doran (t0m) <bobtfish@bobtfish.net> : To help me release the new version, and using it :)
 
+=item Torsten Raudssus (Getty) : to use it a lot in DuckDuckGo (go to see L<MooX> module also)
+
 =back
 
 =head1 BUGS
@@ -489,6 +492,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-__END__
-

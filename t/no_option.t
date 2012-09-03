@@ -1,0 +1,27 @@
+#!perl
+#
+# This file is part of MooX-Options
+#
+# This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
+use strict;
+use warnings;
+
+use Test::More;    # last test to print
+
+{
+
+    package t;
+    use Moo;
+    use MooX::Options;
+
+    1;
+}
+
+my $p = t->new_with_options;
+ok( $p, 't has options' );
+
+done_testing;
