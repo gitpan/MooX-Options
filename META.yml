@@ -38,7 +38,7 @@ resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://github.com/celogeek/MooX-Options/wiki
   repository: git://github.com/celogeek/MooX-Options.git
-version: 3.7
+version: 3.71
 x_Dist_Zilla:
   plugins:
     -

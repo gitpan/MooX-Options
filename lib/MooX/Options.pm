@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.7';    # VERSION
+our $VERSION = '3.71';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc/;
 
@@ -149,7 +149,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.7
+version 3.71
 
 =head1 MooX::Options
 
@@ -467,7 +467,7 @@ L<http://perltalks.celogeek.com/slides/2012/08/moox-options-slide3d.html>
 
 =item Tomas Doran (t0m) <bobtfish@bobtfish.net> : To help me release the new version, and using it :)
 
-=item Torsten Raudssus (Getty) : to use it a lot in DuckDuckGo (go to see L<MooX> module also)
+=item Torsten Raudssus (Getty) : to use it a lot in L<DuckDuckGo|http://duckduckgo.com> (go to see L<MooX> module also)
 
 =back
 
