@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.71';    # VERSION
+our $VERSION = '3.72';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc/;
 
@@ -149,7 +149,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.71
+version 3.72
 
 =head1 MooX::Options
 
@@ -474,7 +474,7 @@ L<http://perltalks.celogeek.com/slides/2012/08/moox-options-slide3d.html>
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://github.com/celogeek/MooX-Options/issues
+http://tasks.celogeek.com/projects/perl-modules-moox-options
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
