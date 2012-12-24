@@ -40,7 +40,7 @@ resources:
   bugtracker: http://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://gitorious.celogeek.com/perl-modules/moox-options
   repository: git://gitorious.celogeek.com/perl-modules/moox-options.git
-version: 3.75
+version: 3.76
 x_Dist_Zilla:
   perl:
     version: 5.016002
