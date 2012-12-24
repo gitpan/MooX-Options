@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.73';    # VERSION
+our $VERSION = '3.74';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -52,7 +52,11 @@ sub parse_options {
     };
 
     my %has_to_split;
-    for my $name ( keys %options_data ) {
+    my @sorted_keys = sort {
+        $options_data{$a}{order} <=> $options_data{$b}{order}  # sort by order
+            or $a cmp $b    # sort by attr name
+    } keys %options_data;
+    for my $name (@sorted_keys) {
         my %data = %{ $options_data{$name} };
         my $doc  = $data{doc};
         $doc = "no doc for $name" if !defined $doc;
@@ -149,7 +153,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.73
+version 3.74
 
 =head1 METHODS
 

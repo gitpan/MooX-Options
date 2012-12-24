@@ -14,9 +14,9 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.73';    # VERSION
+our $VERSION = '3.74';    # VERSION
 my @OPTIONS_ATTRIBUTES
-    = qw/format short repeatable negativable autosplit doc/;
+    = qw/format short repeatable negativable autosplit doc order/;
 
 sub import {
     my ( undef, @import ) = @_;
@@ -120,6 +120,7 @@ sub _filter_attributes {
 sub _validate_and_filter_options {
     my (%options) = @_;
     $options{doc} = $options{documentation} if !defined $options{doc};
+    $options{order} = 0 if !defined $options{order};
 
     my %cmdline_options = map { ( $_ => $options{$_} ) }
         grep { exists $options{$_} } @OPTIONS_ATTRIBUTES, 'required';
@@ -149,7 +150,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.73
+version 3.74
 
 =head1 MooX::Options
 
@@ -434,6 +435,10 @@ Ex :
     local @ARGV=('-vvv');
     my $t = t->new_with_options;
     t->verbose # 3
+
+=item order
+
+Specified the order of the attribute.
 
 =back
 
