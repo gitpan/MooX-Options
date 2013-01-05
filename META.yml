@@ -40,7 +40,7 @@ resources:
   bugtracker: http://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://gitorious.celogeek.com/perl-modules/moox-options
   repository: git://gitorious.celogeek.com/perl-modules/moox-options.git
-version: 3.76
+version: 3.77
 x_Dist_Zilla:
   perl:
     version: 5.016002
@@ -48,7 +48,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Git::NextVersion
       name: '@Author::Celogeek/Git::NextVersion'
-      version: 2.005
+      version: 2.006
     -
       class: Dist::Zilla::Plugin::NextRelease
       name: '@Author::Celogeek/NextRelease'
@@ -56,19 +56,19 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Git::Check
       name: '@Author::Celogeek/@Git/Check'
-      version: 2.005
+      version: 2.006
     -
       class: Dist::Zilla::Plugin::Git::Commit
       name: '@Author::Celogeek/@Git/Commit'
-      version: 2.005
+      version: 2.006
     -
       class: Dist::Zilla::Plugin::Git::Tag
       name: '@Author::Celogeek/@Git/Tag'
-      version: 2.005
+      version: 2.006
     -
       class: Dist::Zilla::Plugin::Git::Push
       name: '@Author::Celogeek/@Git/Push'
-      version: 2.005
+      version: 2.006
     -
       class: Dist::Zilla::Plugin::GatherDir
       name: '@Author::Celogeek/@Filter/GatherDir'
@@ -165,6 +165,10 @@ x_Dist_Zilla:
       class: Dist::Zilla::Plugin::ReadmeMarkdownFromPod
       name: '@Author::Celogeek/ReadmeMarkdownFromPod'
       version: 0.120120
+    -
+      class: Dist::Zilla::Plugin::MetaJSON
+      name: '@Author::Celogeek/MetaJSON'
+      version: 4.300028
     -
       class: Dist::Zilla::Plugin::MetaResourcesFromGit
       name: '@Author::Celogeek/MetaResourcesFromGit'

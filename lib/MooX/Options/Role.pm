@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.76';    # VERSION
+our $VERSION = '3.77';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -45,6 +45,14 @@ sub parse_options {
         my ( $name, %data ) = @_;
         my $cmdline_name = $name;
         $cmdline_name .= '|' . $data{short} if defined $data{short};
+
+        #dash name support
+        my $dash_name = $name;
+        $dash_name =~ tr/_/-/;
+        if ( $dash_name ne $name ) {
+            $cmdline_name .= '|' . $dash_name;
+        }
+
         $cmdline_name .= '+' if $data{repeatable} && !defined $data{format};
         $cmdline_name .= '!' if $data{negativable};
         $cmdline_name .= '=' . $data{format} if defined $data{format};
@@ -153,7 +161,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.76
+version 3.77
 
 =head1 METHODS
 

@@ -108,6 +108,16 @@ BEGIN {
     1;
 }
 
+{
+
+    package t_dash;
+    use Moose;
+    use MooX::Options;
+
+    option 'start_date' => ( is => 'ro', format => 's', short => 's' );
+    1;
+}
+
 subtest "Moose" => sub {
     note "Test Moose";
     require $RealBin . '/base.st';
