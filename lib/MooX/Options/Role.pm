@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.77';    # VERSION
+our $VERSION = '3.78';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -120,7 +120,9 @@ sub parse_options {
     my %cmdline_params = %params;
     for my $name ( keys %options_data ) {
         my %data = %{ $options_data{$name} };
-        if ( !defined $cmdline_params{$name} ) {
+        if ( !defined $cmdline_params{$name}
+            || $options_config{prefer_commandline} )
+        {
             my $val = $opt->$name();
             if ( defined $val ) {
                 $cmdline_params{$name} = $val;
@@ -161,7 +163,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.77
+version 3.78
 
 =head1 METHODS
 
