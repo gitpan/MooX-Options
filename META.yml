@@ -17,7 +17,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300032, CPAN::Meta::Converter version 2.130880'
+generated_by: 'Dist::Zilla version 4.300033, CPAN::Meta::Converter version 2.130880'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -28,6 +28,7 @@ requires:
   Data::Record: 0
   Getopt::Long: 2.38
   Getopt::Long::Descriptive: 0.091
+  JSON: 0
   MRO::Compat: 0
   Module::Load::Conditional: 0.54
   Module::Metadata: 1.000011
@@ -40,7 +41,7 @@ resources:
   bugtracker: http://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://gitorious.celogeek.com/perl-modules/moox-options
   repository: git://gitorious.celogeek.com/perl-modules/moox-options.git
-version: 3.78
+version: 3.79
 x_Dist_Zilla:
   perl:
     version: 5.016003
@@ -52,7 +53,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::NextRelease
       name: '@Author::Celogeek/NextRelease'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::Git::Check
       name: '@Author::Celogeek/@Git/Check'
@@ -72,59 +73,59 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::GatherDir
       name: '@Author::Celogeek/@Filter/GatherDir'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::PruneCruft
       name: '@Author::Celogeek/@Filter/PruneCruft'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ManifestSkip
       name: '@Author::Celogeek/@Filter/ManifestSkip'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::MetaYAML
       name: '@Author::Celogeek/@Filter/MetaYAML'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::License
       name: '@Author::Celogeek/@Filter/License'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::Readme
       name: '@Author::Celogeek/@Filter/Readme'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ExtraTests
       name: '@Author::Celogeek/@Filter/ExtraTests'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ExecDir
       name: '@Author::Celogeek/@Filter/ExecDir'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ShareDir
       name: '@Author::Celogeek/@Filter/ShareDir'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::Manifest
       name: '@Author::Celogeek/@Filter/Manifest'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::TestRelease
       name: '@Author::Celogeek/@Filter/TestRelease'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ConfirmRelease
       name: '@Author::Celogeek/@Filter/ConfirmRelease'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::UploadToCPAN
       name: '@Author::Celogeek/@Filter/UploadToCPAN'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ModuleBuild
       name: '@Author::Celogeek/ModuleBuild'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ReportVersions
       name: '@Author::Celogeek/ReportVersions'
@@ -152,15 +153,15 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Test::UnusedVars
       name: '@Author::Celogeek/Test::UnusedVars'
-      version: 2.000003
+      version: 2.000004
     -
       class: Dist::Zilla::Plugin::PodCoverageTests
       name: '@Author::Celogeek/PodCoverageTests'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::PruneFiles
       name: '@Author::Celogeek/PruneFiles'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::ReadmeMarkdownFromPod
       name: '@Author::Celogeek/ReadmeMarkdownFromPod'
@@ -168,7 +169,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::MetaJSON
       name: '@Author::Celogeek/MetaJSON'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::MetaResourcesFromGit
       name: '@Author::Celogeek/MetaResourcesFromGit'
@@ -176,7 +177,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: '@Author::Celogeek/MetaConfig'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::PodWeaver
       name: '@Author::Celogeek/PodWeaver'
@@ -196,7 +197,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::AutoPrereqs
       name: AutoPrereqs
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:
@@ -204,7 +205,7 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::MetaResourcesFromGit
       name: MetaResourcesFromGit
@@ -212,29 +213,29 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':IncModules'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':TestFiles'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ExecFiles'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ShareFiles'
-      version: 4.300032
+      version: 4.300033
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':MainModule'
-      version: 4.300032
+      version: 4.300033
   zilla:
     class: Dist::Zilla::Dist::Builder
     config:
       is_trial: 0
-    version: 4.300032
+    version: 4.300033
