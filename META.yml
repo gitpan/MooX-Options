@@ -3,6 +3,7 @@ abstract: 'add option keywords to your object (Mo/Moo/Moose)'
 author:
   - 'celogeek <me@celogeek.com>'
 build_requires:
+  English: 0
   File::Find: 0
   File::Temp: 0
   FindBin: 0
@@ -10,6 +11,7 @@ build_requires:
   Role::Tiny::With: 0
   Scalar::Util: 0
   Test::More: 0.94
+  Test::Requires: 0
   Test::Trap: 0
   Try::Tiny: 0
   namespace::clean: 0
@@ -41,7 +43,7 @@ resources:
   bugtracker: http://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://gitorious.celogeek.com/perl-modules/moox-options
   repository: git://gitorious.celogeek.com/perl-modules/moox-options.git
-version: 3.79
+version: 3.80
 x_Dist_Zilla:
   perl:
     version: 5.016003

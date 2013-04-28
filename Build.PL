@@ -17,7 +17,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "3.79",
+  "dist_version" => "3.80",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
@@ -39,12 +39,14 @@ my %module_build_args = (
   },
   "script_files" => [],
   "test_requires" => {
+    "English" => 0,
     "File::Find" => 0,
     "File::Temp" => 0,
     "FindBin" => 0,
     "Role::Tiny::With" => 0,
     "Scalar::Util" => 0,
     "Test::More" => "0.94",
+    "Test::Requires" => 0,
     "Test::Trap" => 0,
     "Try::Tiny" => 0,
     "namespace::clean" => 0,

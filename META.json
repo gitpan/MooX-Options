@@ -49,12 +49,14 @@
       },
       "test" : {
          "requires" : {
+            "English" : "0",
             "File::Find" : "0",
             "File::Temp" : "0",
             "FindBin" : "0",
             "Role::Tiny::With" : "0",
             "Scalar::Util" : "0",
             "Test::More" : "0.94",
+            "Test::Requires" : "0",
             "Test::Trap" : "0",
             "Try::Tiny" : "0",
             "namespace::clean" : "0",
@@ -74,7 +76,7 @@
          "web" : "https://gitorious.celogeek.com/perl-modules/moox-options"
       }
    },
-   "version" : "3.79",
+   "version" : "3.80",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.016003"

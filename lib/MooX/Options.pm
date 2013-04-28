@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.79';    # VERSION
+our $VERSION = '3.80';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc order json/;
 
@@ -162,7 +162,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.79
+version 3.80
 
 =head1 MooX::Options
 
@@ -491,6 +491,8 @@ Ex :
     local @ARGV=('--hash', '{"a":1,"b":2}');
     my $t = t->new_with_options;
     t->hash # { a => 1, b => 2 }
+
+=back
 
 =head1 namespace::clean
 
