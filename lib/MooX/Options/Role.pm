@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.81';    # VERSION
+our $VERSION = '3.82';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -172,7 +172,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.81
+version 3.82
 
 =head1 METHODS
 
@@ -201,7 +201,7 @@ Don't use MooX::Options::Role directly. It is used by L<MooX::Options> to upgrad
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-http://tasks.celogeek.com/projects/perl-modules-moox-options
+https://tasks.celogeek.com/projects/perl-modules-moox-options
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
