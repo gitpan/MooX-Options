@@ -1,4 +1,4 @@
-building test distribution under .build/q1PrGWgynO
+building test distribution under .build/NlQxmbdgU5
 [DZ] beginning to build MooX-Options
 [DZ] guessing dist's main_module is lib/MooX/Options.pm
 [DZ] extracting distribution abstract from lib/MooX/Options.pm
@@ -6,9 +6,9 @@ building test distribution under .build/q1PrGWgynO
 [@GRS/@Filter/ExtraTests] rewriting release test xt/release/pod-coverage.t
 [@GRS/@Filter/ExtraTests] rewriting author test xt/author/critic.t
 [@GRS/ReadmeMarkdownFromPod] Override README.mkdn in build
-[DZ] writing MooX-Options in .build/q1PrGWgynO
+[DZ] writing MooX-Options in .build/NlQxmbdgU5
 Created MYMETA.yml and MYMETA.json
-Creating new 'Build' script for 'MooX-Options' version '3.82'
+Creating new 'Build' script for 'MooX-Options' version '3.83'
 Building MooX-Options
 t/00-compile.t ............ ok
 # Testing with Perl 5.016003, /home/gitlab_ci/perl5/perlbrew/perls/perl-5.16.3/bin/perl
@@ -54,21 +54,21 @@ t/release-pod-coverage.t .. ok
 t/release-unused-vars.t ... ok
 t/role.t .................. ok
 All tests successful.
-Files=18, Tests=73, 15 wallclock secs ( 0.07 usr  0.01 sys + 14.34 cusr  0.57 csys = 14.99 CPU)
+Files=18, Tests=73, 16 wallclock secs ( 0.06 usr  0.01 sys + 14.60 cusr  0.62 csys = 15.29 CPU)
 Result: PASS
 cover
-Reading database from /home/gitlab_ci/repositories/celogeek/perl-modules-moox-options/.build/q1PrGWgynO/cover_db
+Reading database from /home/gitlab_ci/repositories/celogeek/perl-modules-moox-options/.build/NlQxmbdgU5/cover_db
 
 
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
 File                           stmt   bran   cond    sub    pod   time  total
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
-blib/lib/MooX/Options.pm      100.0  100.0  100.0  100.0    n/a   71.3  100.0
-.../lib/MooX/Options/Role.pm  100.0  100.0  100.0  100.0  100.0   28.7  100.0
+blib/lib/MooX/Options.pm      100.0  100.0  100.0  100.0    n/a   72.2  100.0
+.../lib/MooX/Options/Role.pm  100.0  100.0  100.0  100.0  100.0   27.8  100.0
 Total                         100.0  100.0  100.0  100.0  100.0  100.0  100.0
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 
-HTML output written to /home/gitlab_ci/repositories/celogeek/perl-modules-moox-options/.build/q1PrGWgynO/cover_db/coverage.html
+HTML output written to /home/gitlab_ci/repositories/celogeek/perl-modules-moox-options/.build/NlQxmbdgU5/cover_db/coverage.html
 done.
-leaving .build/q1PrGWgynO intact
+leaving .build/NlQxmbdgU5 intact
