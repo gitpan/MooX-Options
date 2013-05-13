@@ -6,6 +6,7 @@ META.json
 META.yml
 README
 README.mkdn
+build.log
 coverage.txt
 dist.ini
 lib/MooX/Options.pm
