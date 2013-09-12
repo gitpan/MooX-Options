@@ -1,85 +1,39 @@
-#!perl
-#
-# This file is part of MooX-Options
-#
-# This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
-#
-# This is free software; you can redistribute it and/or modify it under
-# the same terms as the Perl 5 programming language system itself.
-#
-
 use strict;
 use warnings;
 
-use Test::More;
+# this test was generated with Dist::Zilla::Plugin::Test::Compile 2.021
 
-use File::Find;
-use File::Temp qw{ tempdir };
+use Test::More 0.88;
 
-my @modules;
-find(
-    sub {
-        return if $File::Find::name !~ /\.pm\z/;
-        my $found = $File::Find::name;
-        $found =~ s{^lib/}{};
-        $found =~ s{[/\\]}{::}g;
-        $found =~ s/\.pm$//;
+my @module_files = ( 'MooX/Options.pm', 'MooX/Options/Role.pm' );
 
-        # nothing to skip
-        push @modules, $found;
-    },
-    'lib',
+my @scripts = (
+
 );
 
-sub _find_scripts {
-    my $dir = shift @_;
+# no fake home requested
 
-    my @found_scripts = ();
-    find(
-        sub {
-            return unless -f;
-            my $found = $File::Find::name;
+use IPC::Open3;
+use IO::Handle;
+use File::Spec;
 
-            # nothing to skip
-            open my $FH, '<', $_ or do {
-                note("Unable to open $found in ( $! ), skipping");
-                return;
-            };
-            my $shebang = <$FH>;
-            return unless $shebang =~ /^#!.*?\bperl\b\s*$/;
-            push @found_scripts, $found;
-        },
-        $dir,
-    );
+my @warnings;
+for my $lib (@module_files) {
+    open my $stdout, '>', File::Spec->devnull or die $!;
+    open my $stdin,  '<', File::Spec->devnull or die $!;
+    my $stderr = IO::Handle->new;
 
-    return @found_scripts;
-}
+    my $pid = open3( $stdin, $stdout, $stderr,
+        qq{$^X -Mblib -e"require q[$lib]"} );
+    waitpid( $pid, 0 );
+    is( $? >> 8, 0, "$lib loaded ok" );
 
-my @scripts;
-do { push @scripts, _find_scripts($_) if -d $_ }
-    for qw{ bin script scripts };
-
-my $plan = scalar(@modules) + scalar(@scripts);
-$plan ? ( plan tests => $plan ) : ( plan skip_all => "no tests to run" );
-
-{
-    # fake home for cpan-testers
-    # no fake requested ## local $ENV{HOME} = tempdir( CLEANUP => 1 );
-
-    like( qx{ $^X -Ilib -e "require $_; print '$_ ok'" },
-        qr/^\s*$_ ok/s, "$_ loaded ok" )
-        for sort @modules;
-
-SKIP: {
-        eval "use Test::Script 1.05; 1;";
-        skip "Test::Script needed to test script compilation",
-            scalar(@scripts)
-            if $@;
-        foreach my $file (@scripts) {
-            my $script = $file;
-            $script =~ s!.*/!!;
-            script_compiles( $file, "$script script compiles" );
-        }
+    if ( my @_warnings = <$stderr> ) {
+        warn @_warnings;
+        push @warnings, @_warnings;
     }
-
 }
+
+is( scalar(@warnings), 0, 'no warnings found' ) if $ENV{AUTHOR_TESTING};
+
+done_testing;

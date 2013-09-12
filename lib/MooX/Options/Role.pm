@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.83';    # VERSION
+our $VERSION = '3.84';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -73,10 +73,18 @@ sub parse_options {
         my $doc  = $data{doc};
         $doc = "no doc for $name" if !defined $doc;
         push @options, [ $option_name->( $name, %data ), $doc ];
-        $has_to_split{$name}
-            = Data::Record->new(
-            { split => $data{autosplit}, unless => $RE{quoted} } )
-            if defined $data{autosplit};
+        if ( defined $data{autosplit} ) {
+            $has_to_split{"--${name}"}
+                = Data::Record->new(
+                { split => $data{autosplit}, unless => $RE{quoted} } );
+            if ( my $short = $data{short} ) {
+                $has_to_split{"-${short}"} = $has_to_split{"--${name}"};
+            }
+            for ( my $i = 1; $i < length($name); $i++ ) {
+                my $long_short = substr( $name, 0, $i );
+                $has_to_split{"--${long_short}"} = $has_to_split{"--${name}"};
+            }
+        }
     }
 
     local @ARGV = @ARGV if $options_config{protect_argv};
@@ -87,7 +95,6 @@ sub parse_options {
         for my $i ( 0 .. $#ARGV ) {
             my $arg = $ARGV[$i];
             my ( $arg_name, $arg_values ) = split( /=/x, $arg, 2 );
-            $arg_name =~ s/^--?//x;
             unless ( defined $arg_values ) {
                 $arg_values = $ARGV[ ++$i ];
             }
@@ -96,7 +103,7 @@ sub parse_options {
 
                     #remove the quoted if exist to chain
                     $record =~ s/^['"]|['"]$//gx;
-                    push @new_argv, "--$arg_name", $record;
+                    push @new_argv, $arg_name, $record;
                 }
             }
             else {
@@ -172,7 +179,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.83
+version 3.84
 
 =head1 METHODS
 
