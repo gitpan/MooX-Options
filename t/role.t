@@ -67,7 +67,7 @@ use Test::Trap;
     trap {
         $opt->options_usage;
     };
-    ok( $trap->stdout =~ /\-\-multi\s+multi\sthreading\smode/x,
+    ok( $trap->stdout =~ /\-\-multi.*multi\sthreading\smode/x,
         "usage method is properly set" );
 }
 {
@@ -84,7 +84,7 @@ use Test::Trap;
     trap {
         $opt->options_usage;
     };
-    ok( $trap->stdout =~ /\-\-multi\s+multi\sthreading\smode/x,
+    ok( $trap->stdout =~ /\-\-multi.*multi\sthreading\smode/x,
         "usage method is properly set" );
 }
 {

@@ -38,14 +38,14 @@ requires:
   Module::Metadata: 1.000011
   Moo: 1.000003
   Regexp::Common: 0
-  perl: 5.006
+  perl: 5.010
   strict: 0
   warnings: 0
 resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: 3.84
+version: 3.85
 x_Dist_Zilla:
   perl:
     version: 5.018001
