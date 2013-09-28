@@ -8,6 +8,8 @@ README
 README.mkdn
 coverage.txt
 dist.ini
+etc/with_config.t.json
+etc/with_config_2.t.json
 lib/MooX/Options.pm
 lib/MooX/Options/Role.pm
 t/00-compile.t
@@ -30,5 +32,6 @@ t/pod.t
 t/release-pod-coverage.t
 t/release-unused-vars.t
 t/role.t
+t/with_config.t
 xt/perlcritic.rc
 xt/perltidy.rc

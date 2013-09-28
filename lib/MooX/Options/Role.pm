@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.85';    # VERSION
+our $VERSION = '3.86';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -21,12 +21,27 @@ use Getopt::Long::Descriptive 0.091;
 use Regexp::Common;
 use Data::Record;
 use JSON;
+use Carp;
 
 requires qw/_options_data _options_config/;
 
 sub new_with_options {
     my ( $class, @params ) = @_;
-    return $class->new( $class->parse_options(@params) );
+    my $self;
+    return $self
+        if eval { $self = $class->new( $class->parse_options(@params) ); 1 };
+    if ( $@ =~ /^Attribute\s\((.*?)\)\sis\srequired/x ) {
+        print "$1 is missing\n";
+    }
+    elsif ( $@ =~ /^Missing\srequired\sarguments:\s(.*)\sat\s\(/x ) {
+        my @missing_required = split /,\s/x, $1;
+        print join( "\n", ( map { $_ . " is missing" } @missing_required ),
+            '' );
+    }
+    else {
+        croak $@;
+    }
+    return $class->parse_options( help => 1 );
 }
 
 ## no critic qw/Modules::ProhibitExcessMainComplexity/
@@ -90,8 +105,7 @@ sub parse_options {
 
         push @options, [ $option_name->( $name, %data ), $doc ];
         if ( defined $data{autosplit} ) {
-            $has_to_split{"--${name}"}
-                = Data::Record->new(
+            $has_to_split{"--${name}"} = Data::Record->new(
                 { split => $data{autosplit}, unless => $RE{quoted} } );
             if ( my $short = $data{short} ) {
                 $has_to_split{"-${short}"} = $has_to_split{"--${name}"};
@@ -143,7 +157,6 @@ sub parse_options {
         exit($exit_code);
     }
 
-    my @missing_required;
     my %cmdline_params = %params;
     for my $name ( keys %options_data ) {
         my %data = %{ $options_data{$name} };
@@ -160,15 +173,6 @@ sub parse_options {
                 }
             }
         }
-        push @missing_required, $name
-            if $data{required} && !defined $cmdline_params{$name};
-    }
-
-    if (@missing_required) {
-        print join( "\n", ( map { $_ . " is missing" } @missing_required ),
-            '' );
-        print $usage, "\n";
-        exit(1);
     }
 
     return %cmdline_params;
@@ -195,7 +199,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.85
+version 3.86
 
 =head1 METHODS
 

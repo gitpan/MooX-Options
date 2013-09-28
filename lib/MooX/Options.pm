@@ -14,17 +14,18 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.85';    # VERSION
+our $VERSION = '3.86';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc order json/;
 
 sub import {
     my ( undef, @import ) = @_;
     my $options_config = {
-        protect_argv       => 1,
-        flavour            => [],
-        skip_options       => [],
-        prefer_commandline => 0,
+        protect_argv          => 1,
+        flavour               => [],
+        skip_options          => [],
+        prefer_commandline    => 0,
+        with_config_from_file => 0,
         @import
     };
 
@@ -70,11 +71,33 @@ sub import {
 
         ## use critic
     }
+    else {
+        if ( $options_config->{with_config_from_file} ) {
+            croak
+                'Please, don\'t use the option <with_config_from_file> into a role.';
+        }
+    }
 
-    my $options_data    = {};
+    my $options_data = {};
+    if ( $options_config->{with_config_from_file} ) {
+        $options_data->{config_prefix} = {
+            format => 's',
+            doc    => 'config prefix',
+            order  => 0,
+        };
+        $options_data->{config_files} = {
+            format => 's@',
+            doc    => 'config files',
+            order  => 0,
+        };
+    }
+
     my $apply_modifiers = sub {
         return if $target->can('new_with_options');
         $with->('MooX::Options::Role');
+        if ( $options_config->{with_config_from_file} ) {
+            $with->('MooX::ConfigFromFile::Role');
+        }
 
         $around->(
             _options_data => sub {
@@ -84,12 +107,15 @@ sub import {
         );
     };
 
+    my @banish_keywords
+        = qw/help option new_with_options parse_options options_usage _options_data _options_config/;
+    if ( $options_config->{with_config_from_file} ) {
+        push @banish_keywords, qw/config_files config_prefix config_dirs/;
+    }
+
     my $option = sub {
         my ( $name, %attributes ) = @_;
-        for my $ban (
-            qw/help option new_with_options parse_options options_usage _options_data _options_config/
-            )
-        {
+        for my $ban (@banish_keywords) {
             croak
                 "You cannot use an option with the name '$ban', it is implied by MooX::Options"
                 if $name eq $ban;
@@ -162,7 +188,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.85
+version 3.86
 
 =head1 MooX::Options
 
@@ -225,6 +251,37 @@ You may enable the L</prefer_commandline> option to reverse this behaviour;  thi
 
     # parse ARGV for options but default to those provided here
     my $t = t->new_with_options( test => 'default' );
+
+=item with_config_from_file
+
+Add to command line 'config_files' and 'config_prefix' from L<MooX::ConfigFromFile>.
+
+This will allow you to pass params from command line or from config file (next priority), to your module.
+
+    Your script : MyPackage
+    {
+        package t;
+        use Moo;
+        use MooX::Options with_config_from_file => 1;
+
+        option 'test' => (is => 'ro');
+
+        1;
+    }
+
+    In /etc/MyPackage.json
+    {
+        "test" : 1
+    }
+
+    my $t = t->new_with_options( );
+    $t->test # 1
+    
+    {
+        local @ARGS = '--test 2';
+        $t = t->new_with_options();
+        $t->test # 2
+    }
 
 =back
 
@@ -531,6 +588,8 @@ L<http://perltalks.celogeek.com/slides/2012/08/moox-options-slide3d.html>
 =item Tomas Doran (t0m) <bobtfish@bobtfish.net> : To help me release the new version, and using it :)
 
 =item Torsten Raudssus (Getty) : to use it a lot in L<DuckDuckGo|http://duckduckgo.com> (go to see L<MooX> module also)
+
+=item Jens Rehsack (REHSACK) : to purpose the with_config_from_file idea for PKGSRC.
 
 =back
 

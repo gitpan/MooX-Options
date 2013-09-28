@@ -4,7 +4,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 # VERSION
 
-version 3.85
+version 3.86
 
 # MooX::Options
 
@@ -62,6 +62,38 @@ The import method can take option :
 
             # parse ARGV for options but default to those provided here
             my $t = t->new_with_options( test => 'default' );
+
+    - with\_config\_from\_file
+
+        Add to command line 'config\_files' and 'config\_prefix' from [MooX::ConfigFromFile](http://search.cpan.org/perldoc?MooX::ConfigFromFile).
+
+        This will allow you to pass params from command line or from config file (next priority), to your module.
+
+            Your script : MyPackage
+            {
+                package t;
+                use Moo;
+                use MooX::Options with_config_from_file => 1;
+
+                option 'test' => (is => 'ro');
+
+                1;
+            }
+
+            In /etc/MyPackage.json
+            {
+                "test" : 1
+            }
+
+            my $t = t->new_with_options( );
+            $t->test # 1
+            
+
+            {
+                local @ARGS = '--test 2';
+                $t = t->new_with_options();
+                $t->test # 2
+            }
 
 # USAGE
 
@@ -352,6 +384,7 @@ If you are using Mouse, I'm sorry to say than the rewrite of this module has mak
 - Matt S. Trout (mst) <mst@shadowcat.co.uk> : For his patience and advice.
 - Tomas Doran (t0m) <bobtfish@bobtfish.net> : To help me release the new version, and using it :)
 - Torsten Raudssus (Getty) : to use it a lot in [DuckDuckGo](http://duckduckgo.com) (go to see [MooX](http://search.cpan.org/perldoc?MooX) module also)
+- Jens Rehsack (REHSACK) : to purpose the with\_config\_from\_file idea for PKGSRC.
 
 # BUGS
 
