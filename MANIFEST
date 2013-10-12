@@ -14,6 +14,7 @@ lib/MooX/Options.pm
 lib/MooX/Options/Role.pm
 t/00-compile.t
 t/000-report-versions.t
+t/around_options_usage.t
 t/author-critic.t
 t/base.st
 t/doc.t
