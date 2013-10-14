@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.89';    # VERSION
+our $VERSION = '3.90';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc order json/;
 
@@ -188,7 +188,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.89
+version 3.90
 
 =head1 MooX::Options
 

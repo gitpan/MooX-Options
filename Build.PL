@@ -17,7 +17,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "3.89",
+  "dist_version" => "3.90",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
@@ -45,6 +45,8 @@ my %module_build_args = (
     "FindBin" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
+    "Mo" => 0,
+    "Moose" => 0,
     "Role::Tiny::With" => 0,
     "Scalar::Util" => 0,
     "Test::More" => "0.94",

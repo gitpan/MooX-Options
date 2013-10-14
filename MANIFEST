@@ -30,6 +30,7 @@ t/namespace_clean.t
 t/no_option.t
 t/order.t
 t/pod.t
+t/release-kwalitee.t
 t/release-pod-coverage.t
 t/release-unused-vars.t
 t/role.t
