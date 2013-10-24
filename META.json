@@ -55,11 +55,9 @@
             "FindBin" : "0",
             "IO::Handle" : "0",
             "IPC::Open3" : "0",
-            "Mo" : "0",
             "Module::Load::Conditional" : "0",
             "Moo" : "0",
             "Moose" : "0",
-            "Role::Tiny::With" : "0",
             "Scalar::Util" : "0",
             "Test::More" : "0.94",
             "Test::Requires" : "0",
@@ -84,7 +82,7 @@
          "web" : "https://github.com/celogeek/MooX-Options"
       }
    },
-   "version" : "3.91",
+   "version" : "3.92",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"

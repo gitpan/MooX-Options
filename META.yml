@@ -8,12 +8,10 @@ build_requires:
   FindBin: 0
   IO::Handle: 0
   IPC::Open3: 0
-  Mo: 0
   Module::Build: 0.3601
   Module::Load::Conditional: 0
   Moo: 0
   Moose: 0
-  Role::Tiny::With: 0
   Scalar::Util: 0
   Test::More: 0.94
   Test::Requires: 0
@@ -51,7 +49,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: 3.91
+version: 3.92
 x_Dist_Zilla:
   perl:
     version: 5.018001
