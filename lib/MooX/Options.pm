@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.90';    # VERSION
+our $VERSION = '3.91';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc order json/;
 
@@ -30,6 +30,12 @@ sub import {
     };
 
     my $target = caller;
+    for my $needed_methods (qw/with around has/) {
+        next if $target->can($needed_methods);
+        croak
+            "Can't find the method <$needed_methods> in <$target> ! Ensure to load a Role::Tiny compatible module like Moo or Moose before using MooX::Options.";
+    }
+
     my $with   = $target->can('with');
     my $around = $target->can('around');
     my $has    = $target->can('has');
@@ -188,7 +194,7 @@ MooX::Options - add option keywords to your object (Mo/Moo/Moose)
 
 =head1 VERSION
 
-version 3.90
+version 3.91
 
 =head1 MooX::Options
 

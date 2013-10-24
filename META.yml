@@ -10,6 +10,8 @@ build_requires:
   IPC::Open3: 0
   Mo: 0
   Module::Build: 0.3601
+  Module::Load::Conditional: 0
+  Moo: 0
   Moose: 0
   Role::Tiny::With: 0
   Scalar::Util: 0
@@ -39,7 +41,7 @@ requires:
   MRO::Compat: 0
   Module::Load::Conditional: 0.54
   Module::Metadata: 1.000011
-  Moo: 1.000003
+  Moo: 1.003001
   MooX::ConfigFromFile: 0
   Regexp::Common: 0
   perl: 5.010
@@ -49,7 +51,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: 3.90
+version: 3.91
 x_Dist_Zilla:
   perl:
     version: 5.018001
@@ -132,7 +134,7 @@ x_Dist_Zilla:
           script_finder:
             - ':ExecFiles'
       name: '@GRS/Test::Compile'
-      version: 2.036
+      version: 2.037
     -
       class: Dist::Zilla::Plugin::Test::UnusedVars
       name: '@GRS/Test::UnusedVars'
@@ -194,14 +196,6 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
-      version: 4.300039
-    -
-      class: Dist::Zilla::Plugin::Prereqs
-      config:
-        Dist::Zilla::Plugin::Prereqs:
-          phase: test
-          type: requires
-      name: TestRequires
       version: 4.300039
     -
       class: Dist::Zilla::Plugin::MetaResourcesFromGit

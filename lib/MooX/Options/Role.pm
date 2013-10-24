@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.90';    # VERSION
+our $VERSION = '3.91';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -219,7 +219,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.90
+version 3.91
 
 =head1 METHODS
 
