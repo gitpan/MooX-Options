@@ -12,12 +12,12 @@ my %module_build_args = (
   "configure_requires" => {
     "Module::Build" => "0.3601"
   },
-  "dist_abstract" => "add option keywords to your object (Mo/Moo/Moose)",
+  "dist_abstract" => "create a command line tools with your Object (Mo / Moo / Moose)",
   "dist_author" => [
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "3.92",
+  "dist_version" => "3.93",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
@@ -29,7 +29,6 @@ my %module_build_args = (
     "Getopt::Long::Descriptive" => "0.091",
     "JSON" => 0,
     "MRO::Compat" => 0,
-    "Module::Load::Conditional" => "0.54",
     "Module::Metadata" => "1.000011",
     "Moo" => "1.003001",
     "MooX::ConfigFromFile" => 0,
@@ -45,9 +44,8 @@ my %module_build_args = (
     "FindBin" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
-    "Module::Load::Conditional" => 0,
     "Moo" => 0,
-    "Moose" => 0,
+    "Role::Tiny::With" => 0,
     "Scalar::Util" => 0,
     "Test::More" => "0.94",
     "Test::Requires" => 0,

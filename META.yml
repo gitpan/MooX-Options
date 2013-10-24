@@ -1,5 +1,5 @@
 ---
-abstract: 'add option keywords to your object (Mo/Moo/Moose)'
+abstract: 'create a command line tools with your Object (Mo / Moo / Moose)'
 author:
   - 'celogeek <me@celogeek.com>'
 build_requires:
@@ -9,9 +9,8 @@ build_requires:
   IO::Handle: 0
   IPC::Open3: 0
   Module::Build: 0.3601
-  Module::Load::Conditional: 0
   Moo: 0
-  Moose: 0
+  Role::Tiny::With: 0
   Scalar::Util: 0
   Test::More: 0.94
   Test::Requires: 0
@@ -37,7 +36,6 @@ requires:
   Getopt::Long::Descriptive: 0.091
   JSON: 0
   MRO::Compat: 0
-  Module::Load::Conditional: 0.54
   Module::Metadata: 1.000011
   Moo: 1.003001
   MooX::ConfigFromFile: 0
@@ -49,7 +47,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: 3.92
+version: 3.93
 x_Dist_Zilla:
   perl:
     version: 5.018001
