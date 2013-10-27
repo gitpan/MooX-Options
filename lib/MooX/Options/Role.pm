@@ -12,12 +12,11 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.93';    # VERSION
+our $VERSION = '3.94';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
-use Getopt::Long 2.38;
-use Getopt::Long::Descriptive 0.091;
+use MooX::Options::Descriptive;
 use Regexp::Common;
 use Data::Record;
 use JSON;
@@ -85,17 +84,6 @@ sub parse_options {
         return $cmdline_name;
     };
 
-    my %format_doc = (
-        's'  => ' String',
-        's@' => '[Strings]',
-        'i'  => ' Int',
-        'i@' => '[Ints]',
-        'o'  => ' Ext. Int',
-        'o@' => '[Ext. Ints]',
-        'f'  => ' Real',
-        'f@' => '[Reals]',
-    );
-
     my %has_to_split;
     for my $name (
         sort {
@@ -108,10 +96,6 @@ sub parse_options {
         my %data = %{ $options_data{$name} };
         my $doc  = $data{doc};
         $doc = "no doc for $name" if !defined $doc;
-        my $format_doc_str = $data{format} // ' None';
-        $format_doc_str = $format_doc{$format_doc_str}
-            if defined $format_doc{$format_doc_str};
-        $doc = "( " . sprintf( "%-11s", $format_doc_str ) . " ), " . $doc;
 
         push @options, [ $option_name->( $name, %data ), $doc ];
         if ( defined $data{autosplit} ) {
@@ -191,7 +175,7 @@ sub options_usage {
     my ( $class, $code, @messages ) = @_;
     my $usage;
     if ( @messages
-        && ref $messages[-1] eq 'Getopt::Long::Descriptive::Usage' )
+        && ref $messages[-1] eq 'MooX::Options::Descriptive::Usage' )
     {
         $usage = shift @messages;
     }
@@ -219,7 +203,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.93
+version 3.94
 
 =head1 METHODS
 

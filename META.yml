@@ -16,7 +16,6 @@ build_requires:
   Test::Requires: 0
   Test::Trap: 0
   Try::Tiny: 0
-  feature: 0
   lib: 0
   namespace::clean: 0
   perl: 5.004
@@ -40,6 +39,11 @@ requires:
   Moo: 1.003001
   MooX::ConfigFromFile: 0
   Regexp::Common: 0
+  Term::Size::Any: 0
+  Text::WrapI18N: 0
+  feature: 0
+  overload: 0
+  parent: 0
   perl: 5.010
   strict: 0
   warnings: 0
@@ -47,7 +51,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-moox-options
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: 3.93
+version: 3.94
 x_Dist_Zilla:
   perl:
     version: 5.018001

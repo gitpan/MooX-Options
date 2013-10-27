@@ -11,6 +11,8 @@ dist.ini
 etc/with_config.t.json
 etc/with_config_2.t.json
 lib/MooX/Options.pm
+lib/MooX/Options/Descriptive.pm
+lib/MooX/Options/Descriptive/Usage.pm
 lib/MooX/Options/Role.pm
 t/00-compile.t
 t/000-report-versions.t

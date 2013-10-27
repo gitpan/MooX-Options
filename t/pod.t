@@ -18,6 +18,3 @@ use Test::Requires { 'Test::Pod' => 1.46 };
 all_pod_files_ok();
 
 done_testing();
-
-__END__
-
