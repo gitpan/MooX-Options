@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '3.94';    # VERSION
+our $VERSION = '3.95';    # VERSION
 my @OPTIONS_ATTRIBUTES
     = qw/format short repeatable negativable autosplit doc order json/;
 
@@ -194,7 +194,7 @@ MooX::Options - create a command line tools with your Object (Mo / Moo / Moose)
 
 =head1 VERSION
 
-version 3.94
+version 3.95
 
 =head1 DESCRIPTION
 
@@ -576,6 +576,18 @@ To use namespace::clean you need to add 2 methods as an exception. It is use by 
 You can call the option with underscore or dash in the name.
 
 For example, --start-date or --start_date will fill the option 'start_date'.
+
+=head1 MooX::Cmd support
+
+If MooX::Cmd is used, the program name is computed based on the information we receive from MooX::Cmd.
+
+If you have a subcommand "sub1", and another subcommand "sub2" of "sub1", this :
+
+  myTools sub1 sub2 -h
+
+display an usage message :
+
+  USAGE: myTools sub1 sub2 [-h] ...
 
 =head1 no more Mouse support
 

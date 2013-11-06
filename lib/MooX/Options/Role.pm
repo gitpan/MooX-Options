@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.94';    # VERSION
+our $VERSION = '3.95';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -141,9 +141,19 @@ sub parse_options {
     if ( defined $options_config{flavour} ) {
         push @flavour, { getopt_conf => $options_config{flavour} };
     }
-    my ( $opt, $usage )
-        = describe_options( ("USAGE: %c %o"), @options,
-        [ 'help|h', "show this help message" ], @flavour );
+
+    my $prog_name = Getopt::Long::Descriptive::prog_name;
+
+    # support of MooX::Cmd
+    if ( $class->can("command_chain") ) {
+        for my $cmd ( @{ $params{command_chain} } ) {
+            $prog_name .= ' ' . join( ' ', keys %{ $cmd->command_commands } );
+        }
+    }
+    my ( $opt, $usage ) = describe_options(
+        ("USAGE: $prog_name %o"), @options,
+        [ 'help|h', "show this help message" ], @flavour
+    );
 
     my %cmdline_params = %params;
     for my $name ( keys %options_data ) {
@@ -203,7 +213,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.94
+version 3.95
 
 =head1 METHODS
 
