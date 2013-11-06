@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.95';    # VERSION
+our $VERSION = '3.96';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -147,7 +147,13 @@ sub parse_options {
     # support of MooX::Cmd
     if ( $class->can("command_chain") ) {
         for my $cmd ( @{ $params{command_chain} } ) {
-            $prog_name .= ' ' . join( ' ', keys %{ $cmd->command_commands } );
+            if ( defined( my $cmd_name = $cmd->command_name ) ) {
+                $prog_name .= ' ' . $cmd_name;
+            }
+            else {
+                $prog_name
+                    .= ' ' . join( ' ', keys %{ $cmd->command_commands } );
+            }
         }
     }
     my ( $opt, $usage ) = describe_options(
@@ -213,7 +219,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.95
+version 3.96
 
 =head1 METHODS
 
