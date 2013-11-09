@@ -84,7 +84,7 @@
          "web" : "https://github.com/celogeek/MooX-Options"
       }
    },
-   "version" : "3.96",
+   "version" : "3.97",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"

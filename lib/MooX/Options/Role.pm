@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.96';    # VERSION
+our $VERSION = '3.97';    # VERSION
 
 use MRO::Compat;
 use Moo::Role;
@@ -145,14 +145,13 @@ sub parse_options {
     my $prog_name = Getopt::Long::Descriptive::prog_name;
 
     # support of MooX::Cmd
-    if ( $class->can("command_chain") ) {
+    if ( ref $params{command_chain} eq 'ARRAY' ) {
         for my $cmd ( @{ $params{command_chain} } ) {
+            next if !ref $cmd;
+            next if !UNIVERSAL::can( $cmd, 'isa' );
+            next if !$cmd->can('command_name');
             if ( defined( my $cmd_name = $cmd->command_name ) ) {
                 $prog_name .= ' ' . $cmd_name;
-            }
-            else {
-                $prog_name
-                    .= ' ' . join( ' ', keys %{ $cmd->command_commands } );
             }
         }
     }
@@ -219,7 +218,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.96
+version 3.97
 
 =head1 METHODS
 
