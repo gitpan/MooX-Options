@@ -4,7 +4,7 @@ MooX::Options - create a command line tools with your Object (Mo / Moo / Moose)
 
 # VERSION
 
-version 3.97
+version 3.98
 
 # DESCRIPTION
 

@@ -25,6 +25,7 @@ t/flavour.t
 t/lib/MooXCmdTest.pm
 t/lib/MooXCmdTest/Cmd/test1.pm
 t/lib/MooXCmdTest/Cmd/test1/Cmd/test2.pm
+t/lib/MooXCmdTest/Cmd/test3.pm
 t/lib/TestNamespaceClean.pm
 t/mo.t
 t/moo.t

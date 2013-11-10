@@ -91,11 +91,11 @@ __EOF__
 
 {
     eval <<__EOF__
-	{
-		package MissingWith;
-		use MooX::Options;
-		1;
-	}
+    {
+        package MissingWith;
+        use MooX::Options;
+        1;
+    }
 __EOF__
         ;
     like $@,
@@ -105,12 +105,12 @@ __EOF__
 
 {
     eval <<__EOF__
-	{
-		package MissingAround;
-		sub with {};
-		use MooX::Options;
-		1;
-	}
+    {
+        package MissingAround;
+        sub with {};
+        use MooX::Options;
+        1;
+    }
 __EOF__
         ;
     like $@,
@@ -120,13 +120,13 @@ __EOF__
 
 {
     eval <<__EOF__
-	{
-		package MissingHas;
-		sub with {};
-		sub around {};
-		use MooX::Options;
-		1;
-	}
+    {
+        package MissingHas;
+        sub with {};
+        sub around {};
+        use MooX::Options;
+        1;
+    }
 __EOF__
         ;
     like $@,
