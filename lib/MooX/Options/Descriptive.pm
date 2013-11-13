@@ -12,7 +12,7 @@ package MooX::Options::Descriptive;
 
 use strict;
 use warnings;
-our $VERSION = '3.98';    # VERSION
+our $VERSION = '3.99';    # VERSION
 
 use Getopt::Long 2.38;
 use Getopt::Long::Descriptive 0.091;
@@ -33,7 +33,7 @@ MooX::Options::Descriptive - This method extend Getopt::Long::Descriptive to cha
 
 =head1 VERSION
 
-version 3.98
+version 3.99
 
 =head1 DESCRIPTION
 

@@ -4,7 +4,7 @@ MooX::Options - create a command line tools with your Object (Mo / Moo / Moose)
 
 # VERSION
 
-version 3.98
+version 3.99
 
 # DESCRIPTION
 
@@ -379,13 +379,42 @@ If you have a subcommand "sub1", and another subcommand "sub2" of "sub1", this :
 
     myTools sub1 sub2 -h
 
-display an usage message :
+display an usage message from myTools :
 
-    USAGE: myTools sub1 sub2 [-h] ...
+    USAGE: myTools [-h] ...
+    ...
+    SUB COMMANDS AVAILABLE: sub1
 
-# no more Mouse support
+display an usage message from myTools sub1:
 
-If you are using Mouse, I'm sorry to say than the rewrite of this module has make it just incompatible. Mouse is not design to by compatible with anything else than Mouse itself. I could just suggest to use Moo instead, which is a great and compatible replacement.
+    USAGE: myTools sub1 [-h] ...
+    ...
+    SUB COMMANDS AVAILABLE: sub2
+
+# Man support
+
+The option "--man" is now avaible. And you can do more than only with "--help" option.
+
+The import support those options :
+
+- description
+
+    The description of your tools.
+
+- authors
+
+    The list of authors of your tools. You can use ever a string or an arrayref :
+
+        use MooX::Options authors => 'Celogeek <me@celogeek.com>'
+
+        use MooX::Options authors => ['Celogeek <me@celogeek.com', 'Jens Rehsack']
+
+- synopsis
+
+        you can define a full example in pod format. This will be placed in the synopsis section
+
+The "option" key also support "long\_doc" which will replace the default "doc" for the "--man".
+Use it for a more explicit help message.
 
 # More examples
 
@@ -396,7 +425,7 @@ If you are using Mouse, I'm sorry to say than the rewrite of this module has mak
 - Matt S. Trout (mst) <mst@shadowcat.co.uk> : For his patience and advice.
 - Tomas Doran (t0m) <bobtfish@bobtfish.net> : To help me release the new version, and using it :)
 - Torsten Raudssus (Getty) : to use it a lot in [DuckDuckGo](http://duckduckgo.com) (go to see [MooX](http://search.cpan.org/perldoc?MooX) module also)
-- Jens Rehsack (REHSACK) : to purpose the with\_config\_from\_file idea for PKGSRC.
+- Jens Rehsack (REHSACK) : to purpose the with\_config\_from\_file idea for PKGSRC, and support of MooX::Cmd.
 
 # BUGS
 
