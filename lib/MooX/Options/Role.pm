@@ -1,7 +1,7 @@
 #
 # This file is part of MooX-Options
 #
-# This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
+# This software is copyright (c) 2013 by celogeek <me@celogeek.com>.
 #
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
@@ -12,18 +12,18 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '3.99';    # VERSION
+our $VERSION = '4.000';    # VERSION
 
 use MRO::Compat;
-use Moo::Role;
 use MooX::Options::Descriptive;
 use Regexp::Common;
 use Data::Record;
 use JSON;
 use Carp;
 use Pod::Usage qw/pod2usage/;
-use Path::Class;
+use Path::Class 0.32;
 use Scalar::Util qw/blessed/;
+use Moo::Role;
 
 requires qw/_options_data _options_config/;
 
@@ -118,8 +118,12 @@ sub parse_options {
         , @flavour
     );
 
-    $usage->{prog_name}    = $prog_name;
-    $usage->{sub_commands} = $class->_options_sub_commands();
+    $usage->{prog_name} = $prog_name;
+    $usage->{target}    = $class;
+
+    if ( $usage->{should_die} ) {
+        return $class->options_usage( 1, $usage );
+    }
 
     my %cmdline_params = %params;
     for my $name ( keys %options_data ) {
@@ -130,7 +134,12 @@ sub parse_options {
             my $val = $opt->$name();
             if ( defined $val ) {
                 if ( $data{json} ) {
-                    $cmdline_params{$name} = decode_json($val);
+                    if (!eval { $cmdline_params{$name} = decode_json($val); 1 }
+                        )
+                    {
+                        carp $@;
+                        return $class->options_usage( 1, $usage );
+                    }
                 }
                 else {
                     $cmdline_params{$name} = $val;
@@ -160,13 +169,20 @@ sub options_usage {
         $usage = shift @messages;
     }
     $code = 0 if !defined $code;
-    print join( "\n", @messages, '' ) if @messages;
     if ( !$usage ) {
         local @ARGV = ();
         my %cmdline_params = $class->parse_options( help => $code );
         $usage = $cmdline_params{help};
     }
-    print $usage . "\n";
+    my $message = "";
+    $message .= join( "\n", @messages, '' ) if @messages;
+    $message .= $usage . "\n";
+    if ( $code > 0 ) {
+        CORE::warn $message;
+    }
+    else {
+        print $message;
+    }
     exit($code) if $code >= 0;
     return;
 }
@@ -181,7 +197,7 @@ sub options_man {
     }
 
     my $man_file = file( Path::Class::tempdir( CLEANUP => 1 ), 'help.pod' );
-    $man_file->spew( $usage->option_pod($class) );
+    $man_file->spew( $usage->option_pod );
 
     pod2usage(
         -verbose => 2,
@@ -294,7 +310,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 3.99
+version 4.000
 
 =head1 METHODS
 
@@ -306,7 +322,7 @@ Check full doc L<MooX::Options> for more details.
 
 =head2 parse_options
 
-Parse your options, call L<Getopt::Long::Descriptve> and convert the result for the "new" method.
+Parse your options, call L<Getopt::Long::Descriptive> and convert the result for the "new" method.
 
 It is use by "new_with_options".
 
@@ -327,7 +343,7 @@ Don't use MooX::Options::Role directly. It is used by L<MooX::Options> to upgrad
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-moox-options
+https://github.com/celogeek/MooX-Options/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
@@ -339,7 +355,7 @@ celogeek <me@celogeek.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
+This software is copyright (c) 2013 by celogeek <me@celogeek.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

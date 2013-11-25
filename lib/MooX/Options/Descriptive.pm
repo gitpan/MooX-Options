@@ -1,7 +1,7 @@
 #
 # This file is part of MooX-Options
 #
-# This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
+# This software is copyright (c) 2013 by celogeek <me@celogeek.com>.
 #
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
@@ -12,7 +12,7 @@ package MooX::Options::Descriptive;
 
 use strict;
 use warnings;
-our $VERSION = '3.99';    # VERSION
+our $VERSION = '4.000';    # VERSION
 
 use Getopt::Long 2.38;
 use Getopt::Long::Descriptive 0.091;
@@ -33,7 +33,7 @@ MooX::Options::Descriptive - This method extend Getopt::Long::Descriptive to cha
 
 =head1 VERSION
 
-version 3.99
+version 4.000
 
 =head1 DESCRIPTION
 
@@ -48,7 +48,7 @@ Method to use for the descriptive build
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-moox-options
+https://github.com/celogeek/MooX-Options/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
@@ -60,7 +60,7 @@ celogeek <me@celogeek.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
+This software is copyright (c) 2013 by celogeek <me@celogeek.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

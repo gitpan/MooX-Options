@@ -1,11 +1,11 @@
 
 
 This archive contains the distribution MooX-Options,
-version 3.99:
+version 4.000:
 
-  create a command line tools with your Object (Mo / Moo / Moose)
+  Options eXtension for Object Class
 
-This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
+This software is copyright (c) 2013 by celogeek <me@celogeek.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -2,7 +2,7 @@
 #
 # This file is part of MooX-Options
 #
-# This software is copyright (c) 2011 by celogeek <me@celogeek.com>.
+# This software is copyright (c) 2013 by celogeek <me@celogeek.com>.
 #
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
@@ -67,12 +67,13 @@ for my $noflavour (qw/plain plain2/) {
         {
             local @ARGV = ( '--bool', 'anarg', '--unknown_option' );
             my @r = trap { $noflavour->new_with_options() };
-            like( $trap->die, qr/USAGE:/, "died with usage message" );
+            is( $trap->exit, 1, "exit code ok" );
             like(
-                $trap->warn(0),
+                $trap->stderr,
                 qr/Unknown option: unknown_option/,
                 "and a warning from GLD"
             );
+            like( $trap->stderr, qr/USAGE:/, "died with usage message" );
         }
     };
 }
