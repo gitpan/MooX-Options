@@ -23,22 +23,32 @@ use Test::More;
 }
 
 my $test = t->new_with_options;
+
+my %ignore_methods;
+@ignore_methods{
+    qw/
+        AUTOLOAD
+        BEGIN
+        BUILD
+        BUILDARGS
+        DEMOLISH
+        DOES
+        ISA
+        __ANON__
+        DESTROY
+        /
+} = ();
+
 my @methods;
 {
     no strict 'refs';
-    @methods = sort { $a cmp $b } keys %{ ref($test) . "::" };
+    @methods = sort { $a cmp $b }
+        grep { !exists $ignore_methods{$_} } keys %{ ref($test) . "::" };
 }
 
 is_deeply(
     \@methods,
     [   qw/
-            BEGIN
-            BUILD
-            BUILDARGS
-            DEMOLISH
-            DOES
-            ISA
-            __ANON__
             _option_name
             _options_config
             _options_data
@@ -64,8 +74,6 @@ is_deeply(
             /
     ],
     'methods ok'
-    )
-    or diag "Found : ",
-    join( ', ', @methods );
+) or diag "Found : ", join( ', ', @methods );
 
 done_testing;

@@ -11,7 +11,7 @@ MooX::Options::Docs::NamespaceClean - Use namespace::clean with MooX::Options
 
 =head1 VERSION
 
-version 4.000
+version 4.001
 
 =head1 DESCRIPTION
 

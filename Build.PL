@@ -17,7 +17,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "4.000",
+  "dist_version" => "4.001",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
@@ -53,7 +53,7 @@ my %module_build_args = (
     "FindBin" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
-    "Moo" => "1.003001",
+    "Moo" => 0,
     "Role::Tiny::With" => 0,
     "Test::More" => "0.94",
     "Test::Requires" => 0,
@@ -61,34 +61,22 @@ my %module_build_args = (
     "Try::Tiny" => 0,
     "lib" => 0,
     "namespace::clean" => 0,
-    "perl" => "5.010"
+    "perl" => "5.004"
   }
 );
 
 
-my %fallback_build_requires = (
-  "Capture::Tiny" => 0,
-  "English" => 0,
-  "File::Spec" => 0,
-  "FindBin" => 0,
-  "IO::Handle" => 0,
-  "IPC::Open3" => 0,
-  "Module::Build" => "0.3601",
-  "Moo" => "1.003001",
-  "Role::Tiny::With" => 0,
-  "Test::More" => "0.94",
-  "Test::Requires" => 0,
-  "Test::Trap" => 0,
-  "Try::Tiny" => 0,
-  "lib" => 0,
-  "namespace::clean" => 0,
-  "perl" => "5.010"
-);
-
-
 unless ( eval { Module::Build->VERSION(0.4004) } ) {
-  delete $module_build_args{test_requires};
-  $module_build_args{build_requires} = \%fallback_build_requires;
+  my $tr = delete $module_build_args{test_requires};
+  my $br = $module_build_args{build_requires};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
 }
 
 my $build = Module::Build->new(%module_build_args);
