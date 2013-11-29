@@ -1,4 +1,4 @@
-# PODNAME: MooX::Options::Docs::NamespaceClean
+# PODNAME: MooX::Options::Manual::NamespaceClean
 # ABSTRACT: Use namespace::clean with MooX::Options
 
 __END__
@@ -7,11 +7,11 @@ __END__
 
 =head1 NAME
 
-MooX::Options::Docs::NamespaceClean - Use namespace::clean with MooX::Options
+MooX::Options::Manual::NamespaceClean - Use namespace::clean with MooX::Options
 
 =head1 VERSION
 
-version 4.001
+version 4.002
 
 =head1 DESCRIPTION
 

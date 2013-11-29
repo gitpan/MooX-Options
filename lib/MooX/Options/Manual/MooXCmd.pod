@@ -1,4 +1,4 @@
-# PODNAME: MooX::Options::Docs::MooXCmd
+# PODNAME: MooX::Options::Manual::MooXCmd
 # ABSTRACT: Manage your tools with MooX::Cmd
 
 __END__
@@ -7,11 +7,11 @@ __END__
 
 =head1 NAME
 
-MooX::Options::Docs::MooXCmd - Manage your tools with MooX::Cmd
+MooX::Options::Manual::MooXCmd - Manage your tools with MooX::Cmd
 
 =head1 VERSION
 
-version 4.001
+version 4.002
 
 =head1 DESCRIPTION
 

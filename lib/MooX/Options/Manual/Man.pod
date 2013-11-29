@@ -1,4 +1,4 @@
-# PODNAME: MooX::Options::Docs::Man
+# PODNAME: MooX::Options::Manual::Man
 # ABSTRACT: More documentation for the man option
 
 __END__
@@ -7,15 +7,15 @@ __END__
 
 =head1 NAME
 
-MooX::Options::Docs::Man - More documentation for the man option
+MooX::Options::Manual::Man - More documentation for the man option
 
 =head1 VERSION
 
-version 4.001
+version 4.002
 
 =head1 SYNOPSIS
 
-  myTools --man
+  myTool --man
 
 =head1 DESCRIPTION
 
@@ -25,13 +25,13 @@ You can add more documentation for the man option. This is the long option.
 
 =head2 description
 
-The description of your tools.
+The description of your tool.
 
   use MooX::Options description => 'Description of your tools'
 
 =head2 authors
 
-The list of authors of your tools.
+The list of authors of your tool.
 
   use MooX::Options authors => 'Celogeek <me@celogeek.com>'
   use MooX::Options authors => ['Celogeek <me@celogeek.com', 'Jens Rehsack']
@@ -43,7 +43,7 @@ You can define a full example in pod format. This will be placed in the synopsis
   use MooX::Options synopsis => '
     A example of my tools
 
-      myTools --run
+      myTool --run
   '
 
 This should not be very easy to do it this way, but you can also extract it from your own script :
@@ -76,7 +76,7 @@ If a 'long_doc' parameter is present, it will replace the 'doc' or 'documentatio
   );
 
 The 'long_doc' will be write in place of the pod documentation. All the rules of pod, is applied.
-For instance, to add a new paragraph, you need to let a line empty.
+For instance, to add a new paragraph, you need to let a empty line.
 
   option 'foo' => (
     is => 'ro',
