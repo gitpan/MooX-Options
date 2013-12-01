@@ -4,7 +4,7 @@ MooX::Options - Explicit Options eXtension for Object Class
 
 # VERSION
 
-version 4.002
+version 4.003
 
 # SYNOPSIS
 
@@ -58,6 +58,15 @@ The help message :
       --man:
           show the manual
 
+The usage message :
+
+    perl myTool.pl --usage
+    USAGE: myTool.pl [ --show_this_file=String ] [ --usage ] [ --help ] [ --man ]
+
+The manual :
+
+    perl myTool.pl --man
+
 # DESCRIPTION
 
 Create a command line tool with your [Mo](http://search.cpan.org/perldoc?Mo), [Moo](http://search.cpan.org/perldoc?Moo), [Moose](http://search.cpan.org/perldoc?Moose) objects.
@@ -84,9 +93,9 @@ It will parse your command line params and your inline params, validate and call
 
 The option keyword replace the 'has' method, and add support specials options for the command line only.
 
-See [MooX::Options::Manual::Option](http://search.cpan.org/perldoc?MooX::Options::Manual::Option) for the documentation.
+See ["OPTION PARAMETERS"](#OPTION PARAMETERS) for the documentation.
 
-## options\_usage
+## options\_usage | --help
 
 It display the usage message and return the exit code
 
@@ -96,6 +105,30 @@ It display the usage message and return the exit code
     $t->options_usage($exit_code, $pre_message);
 
 This method is also automatically fire if the command option "--help" is passed.
+
+    myTool --help
+
+## options\_man | --man
+
+It display the manual.
+
+    my $t = t->new_with_options();
+    $t->options_man();
+
+This is automatically fire if the command option "--man" is passed.
+
+    myTool --man
+
+## options\_short\_usage | --usage
+
+It display a short version of the help message.
+
+    my $t = t->new_with_options();
+    $t->options_short_usage($exit_code);
+
+This is automatically fire if the command option "--usage" is passed.
+
+    myTool --usage
 
 # IMPORT PARAMETERS
 

@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.002';    # VERSION
+our $VERSION = '4.003';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -23,191 +23,8 @@ use Carp;
 use Pod::Usage qw/pod2usage/;
 use Path::Class 0.32;
 use Scalar::Util qw/blessed/;
-use Moo::Role;
 
-requires qw/_options_data _options_config/;
-
-sub new_with_options {
-    my ( $class, %params ) = @_;
-
-    #save subcommand
-
-    if ( ref( my $command_chain = $params{command_chain} ) eq 'ARRAY' ) {
-        $class->can('around')->(
-            _options_prog_name => sub {
-                my $prog_name = Getopt::Long::Descriptive::prog_name;
-                for my $cmd (@$command_chain) {
-                    next if !blessed $cmd || !$cmd->can('command_name');
-                    if ( defined( my $cmd_name = $cmd->command_name ) ) {
-                        $prog_name .= ' ' . $cmd_name;
-                    }
-                }
-
-                return $prog_name;
-            }
-        );
-    }
-
-    if ( ref( my $command_commands = $params{command_commands} ) eq 'HASH' ) {
-        $class->can('around')->(
-            _options_sub_commands => sub {
-                return [ sort keys %$command_commands ];
-            }
-        );
-    }
-
-    my %cmdline_params = $class->parse_options(%params);
-
-    if ( $cmdline_params{help} ) {
-        return $class->options_usage( $params{help}, $cmdline_params{help} );
-    }
-    if ( $cmdline_params{man} ) {
-        return $class->options_man( $cmdline_params{man} );
-    }
-
-    my $self;
-    return $self
-        if eval { $self = $class->new(%cmdline_params); 1 };
-    if ( $@ =~ /^Attribute\s\((.*?)\)\sis\srequired/x ) {
-        print "$1 is missing\n";
-    }
-    elsif ( $@ =~ /^Missing\srequired\sarguments:\s(.*)\sat\s\(/x ) {
-        my @missing_required = split /,\s/x, $1;
-        print join( "\n", ( map { $_ . " is missing" } @missing_required ),
-            '' );
-    }
-    elsif ( $@ =~ /^(.*?)\srequired/x ) {
-        print "$1 is missing\n";
-    }
-    else {
-        croak $@;
-    }
-    %cmdline_params = $class->parse_options( help => 1 );
-    return $class->options_usage( 1, $cmdline_params{help} );
-}
-
-sub parse_options {
-    my ( $class, %params ) = @_;
-
-    my %options_data   = $class->_options_data;
-    my %options_config = $class->_options_config;
-    if ( defined $options_config{skip_options} ) {
-        delete @options_data{ @{ $options_config{skip_options} } };
-    }
-
-    my ( $options, $has_to_split )
-        = _options_prepare_descriptive( \%options_data );
-
-    local @ARGV = @ARGV if $options_config{protect_argv};
-    @ARGV = _options_split_with($has_to_split) if %$has_to_split;
-
-    my @flavour;
-    if ( defined $options_config{flavour} ) {
-        push @flavour, { getopt_conf => $options_config{flavour} };
-    }
-
-    my $prog_name = $class->_options_prog_name();
-
-    # create usage str
-    my $usage_str = "USAGE: $prog_name %o";
-
-    my ( $opt, $usage ) = describe_options(
-        ($usage_str), @$options,
-        [ 'help|h', "show this help message" ],
-        [ 'man',    "show the manual" ],
-        , @flavour
-    );
-
-    $usage->{prog_name} = $prog_name;
-    $usage->{target}    = $class;
-
-    if ( $usage->{should_die} ) {
-        return $class->options_usage( 1, $usage );
-    }
-
-    my %cmdline_params = %params;
-    for my $name ( keys %options_data ) {
-        my %data = %{ $options_data{$name} };
-        if ( !defined $cmdline_params{$name}
-            || $options_config{prefer_commandline} )
-        {
-            my $val = $opt->$name();
-            if ( defined $val ) {
-                if ( $data{json} ) {
-                    if (!eval { $cmdline_params{$name} = decode_json($val); 1 }
-                        )
-                    {
-                        carp $@;
-                        return $class->options_usage( 1, $usage );
-                    }
-                }
-                else {
-                    $cmdline_params{$name} = $val;
-                }
-            }
-        }
-    }
-
-    if ( $opt->help() || defined $params{help} ) {
-        $cmdline_params{help} = $usage;
-    }
-
-    if ( $opt->man() || defined $params{man} ) {
-        $cmdline_params{man} = $usage;
-    }
-
-    return %cmdline_params;
-}
-## use critic
-
-sub options_usage {
-    my ( $class, $code, @messages ) = @_;
-    my $usage;
-    if ( @messages
-        && ref $messages[-1] eq 'MooX::Options::Descriptive::Usage' )
-    {
-        $usage = shift @messages;
-    }
-    $code = 0 if !defined $code;
-    if ( !$usage ) {
-        local @ARGV = ();
-        my %cmdline_params = $class->parse_options( help => $code );
-        $usage = $cmdline_params{help};
-    }
-    my $message = "";
-    $message .= join( "\n", @messages, '' ) if @messages;
-    $message .= $usage . "\n";
-    if ( $code > 0 ) {
-        CORE::warn $message;
-    }
-    else {
-        print $message;
-    }
-    exit($code) if $code >= 0;
-    return;
-}
-
-sub options_man {
-    my ( $class, $usage, $output ) = @_;
-    local @ARGV = ();
-    if ( !$usage ) {
-        local @ARGV = ();
-        my %cmdline_params = $class->parse_options( man => 1 );
-        $usage = $cmdline_params{man};
-    }
-
-    my $man_file = file( Path::Class::tempdir( CLEANUP => 1 ), 'help.pod' );
-    $man_file->spew( $usage->option_pod );
-
-    pod2usage(
-        -verbose => 2,
-        -input   => $man_file->stringify,
-        -exitval => 'NOEXIT',
-        -output  => $output
-    );
-
-    exit(0);
-}
+### PRIVATE
 
 sub _option_name {
     my ( $name, %data ) = @_;
@@ -291,6 +108,227 @@ sub _options_split_with {
 
 }
 
+### PRIVATE
+
+use Moo::Role;
+
+requires qw/_options_data _options_config/;
+
+sub new_with_options {
+    my ( $class, %params ) = @_;
+
+    #save subcommand
+
+    if ( ref( my $command_chain = $params{command_chain} ) eq 'ARRAY' ) {
+        $class->can('around')->(
+            _options_prog_name => sub {
+                my $prog_name = Getopt::Long::Descriptive::prog_name;
+                for my $cmd (@$command_chain) {
+                    next if !blessed $cmd || !$cmd->can('command_name');
+                    if ( defined( my $cmd_name = $cmd->command_name ) ) {
+                        $prog_name .= ' ' . $cmd_name;
+                    }
+                }
+
+                return $prog_name;
+            }
+        );
+    }
+
+    if ( ref( my $command_commands = $params{command_commands} ) eq 'HASH' ) {
+        $class->can('around')->(
+            _options_sub_commands => sub {
+                return [ sort keys %$command_commands ];
+            }
+        );
+    }
+
+    my %cmdline_params = $class->parse_options(%params);
+
+    if ( $cmdline_params{help} ) {
+        return $class->options_usage( $params{help}, $cmdline_params{help} );
+    }
+    if ( $cmdline_params{man} ) {
+        return $class->options_man( $cmdline_params{man} );
+    }
+    if ( $cmdline_params{usage} ) {
+        return $class->options_short_usage( $params{usage},
+            $cmdline_params{usage} );
+    }
+
+    my $self;
+    return $self
+        if eval { $self = $class->new(%cmdline_params); 1 };
+    if ( $@ =~ /^Attribute\s\((.*?)\)\sis\srequired/x ) {
+        print "$1 is missing\n";
+    }
+    elsif ( $@ =~ /^Missing\srequired\sarguments:\s(.*)\sat\s\(/x ) {
+        my @missing_required = split /,\s/x, $1;
+        print join( "\n", ( map { $_ . " is missing" } @missing_required ),
+            '' );
+    }
+    elsif ( $@ =~ /^(.*?)\srequired/x ) {
+        print "$1 is missing\n";
+    }
+    else {
+        croak $@;
+    }
+    %cmdline_params = $class->parse_options( help => 1 );
+    return $class->options_usage( 1, $cmdline_params{help} );
+}
+
+sub parse_options {
+    my ( $class, %params ) = @_;
+
+    my %options_data   = $class->_options_data;
+    my %options_config = $class->_options_config;
+    if ( defined $options_config{skip_options} ) {
+        delete @options_data{ @{ $options_config{skip_options} } };
+    }
+
+    my ( $options, $has_to_split )
+        = _options_prepare_descriptive( \%options_data );
+
+    local @ARGV = @ARGV if $options_config{protect_argv};
+    @ARGV = _options_split_with($has_to_split) if %$has_to_split;
+
+    my @flavour;
+    if ( defined $options_config{flavour} ) {
+        push @flavour, { getopt_conf => $options_config{flavour} };
+    }
+
+    my $prog_name = $class->_options_prog_name();
+
+    # create usage str
+    my $usage_str = "USAGE: $prog_name %o";
+
+    my ( $opt, $usage ) = describe_options(
+        ($usage_str),
+        @$options,
+        [ 'usage',  'show a short help message' ],
+        [ 'help|h', "show a help message" ],
+        [ 'man',    "show the manual" ],
+        ,
+        @flavour
+    );
+
+    $usage->{prog_name} = $prog_name;
+    $usage->{target}    = $class;
+
+    if ( $usage->{should_die} ) {
+        return $class->options_usage( 1, $usage );
+    }
+
+    my %cmdline_params = %params;
+    for my $name ( keys %options_data ) {
+        my %data = %{ $options_data{$name} };
+        if ( !defined $cmdline_params{$name}
+            || $options_config{prefer_commandline} )
+        {
+            my $val = $opt->$name();
+            if ( defined $val ) {
+                if ( $data{json} ) {
+                    if (!eval { $cmdline_params{$name} = decode_json($val); 1 }
+                        )
+                    {
+                        carp $@;
+                        return $class->options_usage( 1, $usage );
+                    }
+                }
+                else {
+                    $cmdline_params{$name} = $val;
+                }
+            }
+        }
+    }
+
+    if ( $opt->help() || defined $params{help} ) {
+        $cmdline_params{help} = $usage;
+    }
+
+    if ( $opt->man() || defined $params{man} ) {
+        $cmdline_params{man} = $usage;
+    }
+
+    if ( $opt->usage() || defined $params{usage} ) {
+        $cmdline_params{usage} = $usage;
+    }
+
+    return %cmdline_params;
+}
+## use critic
+
+sub options_usage {
+    my ( $class, $code, @messages ) = @_;
+    my $usage;
+    if ( @messages
+        && ref $messages[-1] eq 'MooX::Options::Descriptive::Usage' )
+    {
+        $usage = shift @messages;
+    }
+    $code = 0 if !defined $code;
+    if ( !$usage ) {
+        local @ARGV = ();
+        my %cmdline_params = $class->parse_options( help => $code );
+        $usage = $cmdline_params{help};
+    }
+    my $message = "";
+    $message .= join( "\n", @messages, '' ) if @messages;
+    $message .= $usage . "\n";
+    if ( $code > 0 ) {
+        CORE::warn $message;
+    }
+    else {
+        print $message;
+    }
+    exit($code) if $code >= 0;
+    return;
+}
+
+sub options_short_usage {
+    my ( $class, $code, $usage ) = @_;
+    $code = 0 if !defined $code;
+
+    if ( !defined $usage || !ref $usage ) {
+        local @ARGV = ();
+        my %cmdline_params = $class->parse_options( help => $code );
+        $usage = $cmdline_params{help};
+    }
+    my $message = "USAGE: " . $usage->option_short_usage . "\n";
+    if ( $code > 0 ) {
+        CORE::warn $message;
+    }
+    else {
+        print $message;
+    }
+    exit($code) if $code >= 0;
+    return;
+}
+
+sub options_man {
+    my ( $class, $usage, $output ) = @_;
+    local @ARGV = ();
+    if ( !$usage ) {
+        local @ARGV = ();
+        my %cmdline_params = $class->parse_options( man => 1 );
+        $usage = $cmdline_params{man};
+    }
+
+    my $man_file = file( Path::Class::tempdir( CLEANUP => 1 ), 'help.pod' );
+    $man_file->spew( $usage->option_pod );
+
+    pod2usage(
+        -verbose => 2,
+        -input   => $man_file->stringify,
+        -exitval => 'NOEXIT',
+        -output  => $output
+    );
+
+    exit(0);
+}
+
+### PRIVATE NEED TO BE EXPORTED
+
 sub _options_prog_name {
     return Getopt::Long::Descriptive::prog_name;
 }
@@ -298,6 +336,9 @@ sub _options_prog_name {
 sub _options_sub_commands {
     return;
 }
+
+### PRIVATE NEED TO BE EXPORTED
+
 1;
 
 __END__
@@ -310,7 +351,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.002
+version 4.003
 
 =head1 METHODS
 
@@ -331,6 +372,10 @@ It is use by "new_with_options".
 Display help message.
 
 Check full doc L<MooX::Options> for more details.
+
+=head2 options_short_usage
+
+Display quick usage message, with only the list of options
 
 =head2 options_man
 

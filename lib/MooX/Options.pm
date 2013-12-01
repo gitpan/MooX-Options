@@ -12,7 +12,7 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '4.002';    # VERSION
+our $VERSION = '4.003';    # VERSION
 use Carp;
 
 my @OPTIONS_ATTRIBUTES
@@ -117,7 +117,7 @@ sub import {
     };
 
     my @banish_keywords
-        = qw/help man option new_with_options parse_options options_usage _options_data _options_config/;
+        = qw/help man usage option new_with_options parse_options options_usage _options_data _options_config/;
     if ( $options_config->{with_config_from_file} ) {
         push @banish_keywords, qw/config_files config_prefix config_dirs/;
     }
@@ -197,7 +197,7 @@ MooX::Options - Explicit Options eXtension for Object Class
 
 =head1 VERSION
 
-version 4.002
+version 4.003
 
 =head1 SYNOPSIS
 
@@ -245,6 +245,15 @@ The help message :
       --man:
           show the manual
 
+The usage message :
+
+  perl myTool.pl --usage
+  USAGE: myTool.pl [ --show_this_file=String ] [ --usage ] [ --help ] [ --man ]
+
+The manual :
+
+  perl myTool.pl --man
+
 =head1 DESCRIPTION
 
 Create a command line tool with your L<Mo>, L<Moo>, L<Moose> objects.
@@ -271,9 +280,9 @@ It will parse your command line params and your inline params, validate and call
 
 The option keyword replace the 'has' method, and add support specials options for the command line only.
 
-See L<MooX::Options::Manual::Option> for the documentation.
+See L</OPTION PARAMETERS> for the documentation.
 
-=head2 options_usage
+=head2 options_usage | --help
 
 It display the usage message and return the exit code
 
@@ -283,6 +292,30 @@ It display the usage message and return the exit code
   $t->options_usage($exit_code, $pre_message);
 
 This method is also automatically fire if the command option "--help" is passed.
+
+  myTool --help
+
+=head2 options_man | --man
+
+It display the manual.
+
+  my $t = t->new_with_options();
+  $t->options_man();
+
+This is automatically fire if the command option "--man" is passed.
+
+  myTool --man
+
+=head2 options_short_usage | --usage
+
+It display a short version of the help message.
+
+  my $t = t->new_with_options();
+  $t->options_short_usage($exit_code);
+
+This is automatically fire if the command option "--usage" is passed.
+
+  myTool --usage
 
 =head1 IMPORT PARAMETERS
 
