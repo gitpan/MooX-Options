@@ -54,7 +54,7 @@ resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: 4.005
+version: 4.006
 x_Dist_Zilla:
   perl:
     version: 5.018001

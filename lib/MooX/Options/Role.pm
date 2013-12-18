@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.005';    # VERSION
+our $VERSION = '4.006';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -90,7 +90,10 @@ sub _options_fix_argv {
         my ( $arg_name_with_dash, $arg_values ) = split( /=/x, $arg, 2 );
         if ( index( $arg_name_with_dash, '--' ) < 0 && !defined $arg_values )
         {
-            $arg_values = substr( $arg_name_with_dash, 2 );
+            $arg_values
+                = length($arg_name_with_dash) > 2
+                ? substr( $arg_name_with_dash, 2 )
+                : undef;
             $arg_name_with_dash = substr( $arg_name_with_dash, 0, 2 );
         }
         unshift @ARGV, $arg_values if defined $arg_values;
@@ -375,7 +378,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.005
+version 4.006
 
 =head1 METHODS
 
