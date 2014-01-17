@@ -11,15 +11,15 @@ MooX::Options::Manual::Man - More documentation for the man option
 
 =head1 VERSION
 
-version 4.006
-
-=head1 SYNOPSIS
-
-  myTool --man
+version 4.007
 
 =head1 DESCRIPTION
 
 You can add more documentation for the man option. This is the long option.
+
+=head1 SYNOPSIS
+
+  myTool --man
 
 =head1 PARAMETERS
 
