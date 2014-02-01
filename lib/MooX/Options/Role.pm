@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.007';    # VERSION
+our $VERSION = '4.008';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -378,7 +378,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.007
+version 4.008
 
 =head1 METHODS
 
@@ -406,7 +406,7 @@ Display quick usage message, with only the list of options
 
 =head2 options_man
 
-Display a pod like a manuel
+Display a pod like a manual
 
 =head1 USAGE
 

@@ -4,15 +4,15 @@ MooX::Options - Explicit Options eXtension for Object Class
 
 # VERSION
 
-version 4.007
+version 4.008
 
 # DESCRIPTION
 
-Create a command line tool with your [Mo](http://search.cpan.org/perldoc?Mo), [Moo](http://search.cpan.org/perldoc?Moo), [Moose](http://search.cpan.org/perldoc?Moose) objects.
+Create a command line tool with your [Mo](https://metacpan.org/pod/Mo), [Moo](https://metacpan.org/pod/Moo), [Moose](https://metacpan.org/pod/Moose) objects.
 
 Everything is explicit. You have an `option` keyword to replace the usual `has` to explicitly use your attribute into the command line.
 
-The `option` keyword takes additional parameters and uses [Getopt::Long::Descriptive](http://search.cpan.org/perldoc?Getopt::Long::Descriptive)
+The `option` keyword takes additional parameters and uses [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive)
 to generate a command line tool.
 
 # SYNOPSIS
@@ -23,7 +23,6 @@ In myOptions.pm :
     use Moo;
     use MooX::Options;
     
-
     option 'show_this_file' => (
         is => 'ro',
         format => 's',
@@ -38,10 +37,8 @@ In myTool.pl :
     use myOptions;
     use Path::Class;
     
-
     my $opt = myOptions->new_with_options;
     
-
     say "Content of the file : ",
          file($opt->show_this_file)->slurp;
 
@@ -55,15 +52,12 @@ The help message :
     perl myTool.pl --help
     USAGE: myTool.pl [-h] [long options...]
     
-
       --show_this_file: String
           the file to display
       
-
       -h --help:
           show this help message
       
-
       --man:
           show the manual
 
@@ -93,7 +87,7 @@ It will parse your command line params and your inline params, validate and call
 
 The `option` keyword replaces the `has` method and adds support for special options for the command line only.
 
-See ["OPTION PARAMETERS"](#OPTION PARAMETERS) for the documentation.
+See ["OPTION PARAMETERS"](#option-parameters) for the documentation.
 
 ## options\_usage | --help
 
@@ -132,16 +126,16 @@ This is automatically fired if the command option "--usage" is passed.
 
 # IMPORT PARAMETERS
 
-The list of parameters supported by [MooX::Options](http://search.cpan.org/perldoc?MooX::Options).
+The list of parameters supported by [MooX::Options](https://metacpan.org/pod/MooX::Options).
 
 ## flavour
 
-Passes extra arguments for [Getopt::Long::Descriptive](http://search.cpan.org/perldoc?Getopt::Long::Descriptive). It is usefull if you
-want to configure [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long).
+Passes extra arguments for [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive). It is useful if you
+want to configure [Getopt::Long](https://metacpan.org/pod/Getopt::Long).
 
     use MooX::Options flavour => [qw( pass_through )];
 
-Any flavour is passed to [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long) as a configuration, check the doc to see what is possible.
+Any flavour is passed to [Getopt::Long](https://metacpan.org/pod/Getopt::Long) as a configuration, check the doc to see what is possible.
 
 ## protect\_argv
 
@@ -166,7 +160,7 @@ This parameter will give the command line an higher priority.
 
 ## with\_config\_from\_file
 
-This parameter will load [MooX::ConfigFromFile](http://search.cpan.org/perldoc?MooX::ConfigFromFile) in your module. 
+This parameter will load [MooX::ConfigFromFile](https://metacpan.org/pod/MooX::ConfigFromFile) in your module. 
 The config option will be used between the command line and parameters.
 
 myTool :
@@ -189,16 +183,16 @@ Documentation for the command line option.
 
 Documentation for the man page. By default the `doc` parameter will be used.
 
-See also [Man parameters](http://search.cpan.org/perldoc?MooX::Options::Manual::Man) to get more examples how to build a nice man page.
+See also [Man parameters](https://metacpan.org/pod/MooX::Options::Manual::Man) to get more examples how to build a nice man page.
 
 ## required
 
 This attribute indicates that the parameter is mandatory.
-This attribute is not really used by [MooX::Options](http://search.cpan.org/perldoc?MooX::Options) but ensures that consistent error message will be displayed.
+This attribute is not really used by [MooX::Options](https://metacpan.org/pod/MooX::Options) but ensures that consistent error message will be displayed.
 
 ## format
 
-Format of the params, same as [Getopt::Long::Descriptive](http://search.cpan.org/perldoc?Getopt::Long::Descriptive).
+Format of the params, same as [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive).
 
 - i : integer
 - i@: array of integer
@@ -208,10 +202,10 @@ Format of the params, same as [Getopt::Long::Descriptive](http://search.cpan.org
 
 By default, it's a boolean value.
 
-Take a look of available formats with [Getopt::Long::Descriptive](http://search.cpan.org/perldoc?Getopt::Long::Descriptive).
+Take a look of available formats with [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive).
 
 You need to understand that everything is explicit here. 
-If you use [Moose](http://search.cpan.org/perldoc?Moose) and your attribute has `isa => 'Array[Int]'`, that will __not__ imply the format `i@`.
+If you use [Moose](https://metacpan.org/pod/Moose) and your attribute has `isa => 'Array[Int]'`, that will __not__ imply the format `i@`.
 
 ## format json : special format support
 
@@ -247,7 +241,6 @@ For repeatable option, you can add the autosplit feature with your specific para
 
     option test => (is => 'ro', format => 'i@', default => sub {[]}, autosplit => ',');
     
-
     myTool --test=1 --test=2 # test = (1, 2)
     myTool --test=1,2,3      # test = (1, 2, 3)
 
@@ -288,9 +281,9 @@ By default all options have an order set to `0`, and options are sorted by their
 
 # ADDITIONAL MANUALS
 
-- [Man parameters](http://search.cpan.org/perldoc?MooX::Options::Manual::Man)
-- [Using namespace::clean](http://search.cpan.org/perldoc?MooX::Options::Manual::NamespaceClean)
-- [Manage your tools with MooX::Cmd](http://search.cpan.org/perldoc?MooX::Options::Manual::MooXCmd)
+- [Man parameters](https://metacpan.org/pod/MooX::Options::Manual::Man)
+- [Using namespace::clean](https://metacpan.org/pod/MooX::Options::Manual::NamespaceClean)
+- [Manage your tools with MooX::Cmd](https://metacpan.org/pod/MooX::Options::Manual::MooXCmd)
 
 # EXTERNAL EXAMPLES
 
@@ -300,8 +293,8 @@ By default all options have an order set to `0`, and options are sorted by their
 
 - Matt S. Trout (mst) <mst@shadowcat.co.uk> : For his patience and advice.
 - Tomas Doran (t0m) <bobtfish@bobtfish.net> : To help me release the new version, and using it :)
-- Torsten Raudssus (Getty) : to use it a lot in [DuckDuckGo](http://duckduckgo.com) (go to see [MooX](http://search.cpan.org/perldoc?MooX) module also)
-- Jens Rehsack (REHSACK) : Use with [PkgSrc](http://www.pkgsrc.org/), and many really good idea ([MooX::Cmd](http://search.cpan.org/perldoc?MooX::Cmd), [MooX::ConfigFromFile](http://search.cpan.org/perldoc?MooX::ConfigFromFile), and more to come I'm sure)
+- Torsten Raudssus (Getty) : to use it a lot in [DuckDuckGo](http://duckduckgo.com) (go to see [MooX](https://metacpan.org/pod/MooX) module also)
+- Jens Rehsack (REHSACK) : Use with [PkgSrc](http://www.pkgsrc.org/), and many really good idea ([MooX::Cmd](https://metacpan.org/pod/MooX::Cmd), [MooX::ConfigFromFile](https://metacpan.org/pod/MooX::ConfigFromFile), and more to come I'm sure)
 
 # BUGS
 

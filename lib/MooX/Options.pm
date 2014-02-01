@@ -12,7 +12,7 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '4.007';    # VERSION
+our $VERSION = '4.008';    # VERSION
 use Carp;
 
 my @OPTIONS_ATTRIBUTES
@@ -197,7 +197,7 @@ MooX::Options - Explicit Options eXtension for Object Class
 
 =head1 VERSION
 
-version 4.007
+version 4.008
 
 =head1 DESCRIPTION
 
@@ -323,7 +323,7 @@ The list of parameters supported by L<MooX::Options>.
 
 =head2 flavour
 
-Passes extra arguments for L<Getopt::Long::Descriptive>. It is usefull if you
+Passes extra arguments for L<Getopt::Long::Descriptive>. It is useful if you
 want to configure L<Getopt::Long>.
 
   use MooX::Options flavour => [qw( pass_through )];
