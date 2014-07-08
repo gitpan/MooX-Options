@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.008';    # VERSION
+our $VERSION = '4.009';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -77,7 +77,7 @@ sub _options_fix_argv {
     my @new_argv;
 
     #parse all argv
-    while ( my $arg = shift @ARGV ) {
+    while ( defined( my $arg = shift @ARGV ) ) {
         if ( $arg eq '--' ) {
             push @new_argv, $arg, @ARGV;
             last;
@@ -378,7 +378,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.008
+version 4.009
 
 =head1 METHODS
 

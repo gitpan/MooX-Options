@@ -22,7 +22,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830'
+generated_by: 'Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.140640'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -54,10 +54,10 @@ resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: 4.008
+version: 4.009
 x_Dist_Zilla:
   perl:
-    version: 5.018002
+    version: 5.020000
   plugins:
     -
       class: Dist::Zilla::Plugin::GatherDir
@@ -137,7 +137,7 @@ x_Dist_Zilla:
           script_finder:
             - ':ExecFiles'
       name: '@GRS/Test::Compile'
-      version: 2.039
+      version: 2.043
     -
       class: Dist::Zilla::Plugin::Test::UnusedVars
       name: '@GRS/Test::UnusedVars'

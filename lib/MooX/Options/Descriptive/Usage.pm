@@ -12,7 +12,7 @@ package MooX::Options::Descriptive::Usage;
 
 use strict;
 use warnings;
-our $VERSION = '4.008';    # VERSION
+our $VERSION = '4.009';    # VERSION
 use feature 'say';
 use Text::WrapI18N;
 use Term::Size::Any qw/chars/;
@@ -239,7 +239,7 @@ MooX::Options::Descriptive::Usage - Usage class
 
 =head1 VERSION
 
-version 4.008
+version 4.009
 
 =head1 DESCRIPTION
 

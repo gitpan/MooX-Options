@@ -4,7 +4,7 @@
       "celogeek <me@celogeek.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830",
+   "generated_by" : "Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.140640",
    "license" : [
       "perl_5"
    ],
@@ -87,10 +87,10 @@
          "web" : "https://github.com/celogeek/MooX-Options"
       }
    },
-   "version" : "4.008",
+   "version" : "4.009",
    "x_Dist_Zilla" : {
       "perl" : {
-         "version" : "5.018002"
+         "version" : "5.020000"
       },
       "plugins" : [
          {
@@ -192,7 +192,7 @@
                }
             },
             "name" : "@GRS/Test::Compile",
-            "version" : "2.039"
+            "version" : "2.043"
          },
          {
             "class" : "Dist::Zilla::Plugin::Test::UnusedVars",
