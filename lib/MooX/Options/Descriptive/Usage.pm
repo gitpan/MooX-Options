@@ -12,9 +12,9 @@ package MooX::Options::Descriptive::Usage;
 
 use strict;
 use warnings;
-our $VERSION = '4.009';    # VERSION
-use feature 'say';
-use Text::WrapI18N;
+our $VERSION = '4.010';    # VERSION
+use feature 'say', 'state';
+use Text::LineFold;
 use Term::Size::Any qw/chars/;
 use Getopt::Long::Descriptive;
 use Scalar::Util qw/blessed/;
@@ -70,13 +70,12 @@ sub text {
 }
 
 # set the column size of your terminal into the wrapper
-sub _set_column_size {
+sub _get_line_fold {
     my ($columns) = chars();
     $columns //= 78;
     $columns = $ENV{TEST_FORCE_COLUMN_SIZE}
         if defined $ENV{TEST_FORCE_COLUMN_SIZE};
-    $Text::WrapI18N::columns = $columns - 4;
-    return;
+    return Text::LineFold->new( ColMax => $columns - 4 );
 }
 
 sub option_text {
@@ -85,7 +84,7 @@ sub option_text {
         = defined $self->{target} ? $self->{target}->_options_data : ();
     my $getopt_options = $self->{options};
     my @message;
-    _set_column_size;
+    my $lf = _get_line_fold();
     for my $opt (@$getopt_options) {
         my ( $short, $format ) = $opt->{spec} =~ /(?:\|(\w))?(?:=(.*?))?$/x;
         my $format_doc_str;
@@ -97,7 +96,7 @@ sub option_text {
             . ( length( $opt->{name} ) > 1 ? "-" : "" )
             . $opt->{name} . ":"
             . ( defined $format_doc_str ? " " . $format_doc_str : "" );
-        push @message, wrap( "    ", "        ", $opt->{desc} );
+        push @message, $lf->fold( "    ", "        ", $opt->{desc} );
         push @message, "";
     }
 
@@ -120,7 +119,7 @@ sub option_pod {
         ? $self->{target}->_options_sub_commands() // []
         : [];
 
-    my @man = ( "=head1 NAME", $prog_name, );
+    my @man = ( "=encoding UTF-8", "=head1 NAME", $prog_name, );
 
     if ( defined( my $description = $options_config{description} ) ) {
         push @man, "=head1 DESCRIPTION", $description;
@@ -239,7 +238,7 @@ MooX::Options::Descriptive::Usage - Usage class
 
 =head1 VERSION
 
-version 4.009
+version 4.010
 
 =head1 DESCRIPTION
 

@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.009';    # VERSION
+our $VERSION = '4.010';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -342,7 +342,7 @@ sub options_man {
     }
 
     my $man_file = file( Path::Class::tempdir( CLEANUP => 1 ), 'help.pod' );
-    $man_file->spew( $usage->option_pod );
+    $man_file->spew( iomode => '>:encoding(UTF-8)', $usage->option_pod );
 
     pod2usage(
         -verbose => 2,
@@ -378,7 +378,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.009
+version 4.010
 
 =head1 METHODS
 

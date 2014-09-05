@@ -17,7 +17,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "MooX-Options",
-  "dist_version" => "4.009",
+  "dist_version" => "4.010",
   "license" => "perl",
   "module_name" => "MooX::Options",
   "recommends" => {},
@@ -37,7 +37,7 @@ my %module_build_args = (
     "Regexp::Common" => 0,
     "Scalar::Util" => 0,
     "Term::Size::Any" => 0,
-    "Text::WrapI18N" => 0,
+    "Text::LineFold" => 0,
     "feature" => 0,
     "overload" => 0,
     "parent" => 0,
