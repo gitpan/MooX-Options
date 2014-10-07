@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.010';    # VERSION
+our $VERSION = '4.011';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -128,6 +128,13 @@ sub _options_fix_argv {
         }
         else {
             push @new_argv, $arg_name;
+        }
+
+        # if option has an argument, we keep the argument untouched
+        if ( my $opt_data = $option_data->{$arg_name_without_dash} ) {
+            if ( $opt_data->{format} ) {
+                push @new_argv, shift @ARGV;
+            }
         }
     }
 
@@ -378,7 +385,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.010
+version 4.011
 
 =head1 METHODS
 

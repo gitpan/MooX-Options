@@ -11,7 +11,7 @@ MooX::Options::Manual::Man - More documentation for the man option
 
 =head1 VERSION
 
-version 4.010
+version 4.011
 
 =head1 DESCRIPTION
 
