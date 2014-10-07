@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.011';    # VERSION
+our $VERSION = '4.012';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -39,6 +39,7 @@ sub _options_prepare_descriptive {
     my ($options_data) = @_;
 
     my @options;
+    my %all_options;
     my %has_to_split;
 
     for my $name (
@@ -55,6 +56,13 @@ sub _options_prepare_descriptive {
 
         push @options, [ _option_name( $name, %data ), $doc ];
 
+        push @{ $all_options{$name} }, $name;
+        for ( my $i = 1; $i <= length($name); $i++ ) {
+            my $long_short = substr( $name, 0, $i );
+            push @{ $all_options{$long_short} }, $name
+                if !exists $options_data->{$long_short};
+        }
+
         if ( defined $data{autosplit} ) {
             $has_to_split{$name} = Data::Record->new(
                 { split => $data{autosplit}, unless => $RE{quoted} } );
@@ -68,11 +76,11 @@ sub _options_prepare_descriptive {
         }
     }
 
-    return \@options, \%has_to_split;
+    return \@options, \%has_to_split, \%all_options;
 }
 
 sub _options_fix_argv {
-    my ( $option_data, $has_to_split ) = @_;
+    my ( $option_data, $has_to_split, $all_options ) = @_;
 
     my @new_argv;
 
@@ -102,11 +110,21 @@ sub _options_fix_argv {
             = $arg_name_with_dash =~ /^(\-+)(no\-)?(.*)$/x;
         $arg_name_without_dash =~ s/\-/_/gx;
 
+        my $original_long_option = $all_options->{$arg_name_without_dash};
+        if ( defined $original_long_option ) {
+            if ( @$original_long_option == 1 ) {
+                $original_long_option = $original_long_option->[0];
+            }
+            else {
+                $original_long_option = undef;
+            }
+        }
+
         my $arg_name = $dash;
 
-        if ( defined $negative ) {
-            if ( exists $option_data->{$arg_name_without_dash}
-                && $option_data->{$arg_name_without_dash}{negativable} )
+        if ( defined $negative && defined $original_long_option ) {
+            if ( exists $option_data->{$original_long_option}
+                && $option_data->{$original_long_option}{negativable} )
             {
                 $arg_name .= 'no-';
             }
@@ -131,7 +149,9 @@ sub _options_fix_argv {
         }
 
         # if option has an argument, we keep the argument untouched
-        if ( my $opt_data = $option_data->{$arg_name_without_dash} ) {
+        if ( defined $original_long_option
+            && ( my $opt_data = $option_data->{$original_long_option} ) )
+        {
             if ( $opt_data->{format} ) {
                 push @new_argv, shift @ARGV;
             }
@@ -220,11 +240,11 @@ sub parse_options {
         delete @options_data{ @{ $options_config{skip_options} } };
     }
 
-    my ( $options, $has_to_split )
+    my ( $options, $has_to_split, $all_options )
         = _options_prepare_descriptive( \%options_data );
 
     local @ARGV = @ARGV if $options_config{protect_argv};
-    @ARGV = _options_fix_argv( \%options_data, $has_to_split );
+    @ARGV = _options_fix_argv( \%options_data, $has_to_split, $all_options );
 
     my @flavour;
     if ( defined $options_config{flavour} ) {
@@ -385,7 +405,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.011
+version 4.012
 
 =head1 METHODS
 
