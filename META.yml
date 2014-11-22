@@ -21,8 +21,9 @@ build_requires:
   perl: '5.010'
 configure_requires:
   Module::Build: '0.28'
+  perl: v5.10.0
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.142690'
+generated_by: 'Dist::Zilla version 5.024, CPAN::Meta::Converter version 2.142690'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -54,66 +55,75 @@ resources:
   bugtracker: https://github.com/celogeek/MooX-Options/issues
   homepage: https://tasks.celogeek.com/projects/perl-modules-moox-options
   repository: https://github.com/celogeek/MooX-Options.git
-version: '4.012'
+version: '4.013'
 x_Dist_Zilla:
   perl:
-    version: '5.020000'
+    version: '5.020001'
   plugins:
     -
       class: Dist::Zilla::Plugin::GatherDir
+      config:
+        Dist::Zilla::Plugin::GatherDir:
+          exclude_filename: []
+          exclude_match: []
+          follow_symlinks: '0'
+          include_dotfiles: '0'
+          prefix: ''
+          prune_directory: []
+          root: .
       name: '@GRS/@Filter/GatherDir'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::PruneCruft
       name: '@GRS/@Filter/PruneCruft'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ManifestSkip
       name: '@GRS/@Filter/ManifestSkip'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::MetaYAML
       name: '@GRS/@Filter/MetaYAML'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::License
       name: '@GRS/@Filter/License'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::Readme
       name: '@GRS/@Filter/Readme'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ExtraTests
       name: '@GRS/@Filter/ExtraTests'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ExecDir
       name: '@GRS/@Filter/ExecDir'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ShareDir
       name: '@GRS/@Filter/ShareDir'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::Manifest
       name: '@GRS/@Filter/Manifest'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::TestRelease
       name: '@GRS/@Filter/TestRelease'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ConfirmRelease
       name: '@GRS/@Filter/ConfirmRelease'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ModuleBuild
       config:
         Dist::Zilla::Role::TestRunner:
           default_jobs: 1
       name: '@GRS/ModuleBuild'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ReportVersions
       name: '@GRS/ReportVersions'
@@ -129,7 +139,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::MinimumPerl
       name: '@GRS/MinimumPerl'
-      version: '1.003'
+      version: '1.006'
     -
       class: Dist::Zilla::Plugin::Test::Compile
       config:
@@ -146,7 +156,7 @@ x_Dist_Zilla:
             - ':ExecFiles'
           skips: []
       name: '@GRS/Test::Compile'
-      version: '2.046'
+      version: '2.051'
     -
       class: Dist::Zilla::Plugin::Test::UnusedVars
       name: '@GRS/Test::UnusedVars'
@@ -154,11 +164,11 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::PodCoverageTests
       name: '@GRS/PodCoverageTests'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::PruneFiles
       name: '@GRS/PruneFiles'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::ReadmeMarkdownFromPod
       name: '@GRS/ReadmeMarkdownFromPod'
@@ -166,15 +176,11 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::MetaJSON
       name: '@GRS/MetaJSON'
-      version: '5.020'
-    -
-      class: Dist::Zilla::Plugin::MetaResourcesFromGit
-      name: '@GRS/MetaResourcesFromGit'
-      version: '1.103620'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: '@GRS/MetaConfig'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::PodWeaver
       config:
@@ -188,73 +194,73 @@ x_Dist_Zilla:
             -
               class: Pod::Weaver::Plugin::EnsurePod5
               name: '@CorePrep/EnsurePod5'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Plugin::H1Nester
               name: '@CorePrep/H1Nester'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Name
               name: '@Default/Name'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Version
               name: '@Default/Version'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Region
               name: '@Default/prelude'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Generic
               name: DESCRIPTION
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Generic
               name: SYNOPSIS
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Generic
               name: OVERVIEW
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Collect
               name: ATTRIBUTES
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Collect
               name: METHODS
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Collect
               name: FUNCTIONS
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Leftovers
               name: '@Default/Leftovers'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Region
               name: '@Default/postlude'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Bugs
               name: '@Default/Bugs'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Authors
               name: '@Default/Authors'
-              version: '4.006'
+              version: '4.007'
             -
               class: Pod::Weaver::Section::Legal
               name: '@Default/Legal'
-              version: '4.006'
+              version: '4.007'
       name: '@GRS/PodWeaver'
       version: '4.006'
     -
       class: Dist::Zilla::Plugin::PerlTidy
       name: '@GRS/PerlTidy'
-      version: '0.17'
+      version: '0.19'
     -
       class: Dist::Zilla::Plugin::Test::Perl::Critic
       name: '@GRS/Test::Perl::Critic'
@@ -266,7 +272,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::AutoPrereqs
       name: AutoPrereqs
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:
@@ -274,7 +280,7 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::MetaResourcesFromGit
       name: MetaResourcesFromGit
@@ -282,37 +288,37 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':IncModules'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':TestFiles'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ExecFiles'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ShareFiles'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':MainModule'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':AllFiles'
-      version: '5.020'
+      version: '5.024'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':NoFiles'
-      version: '5.020'
+      version: '5.024'
   zilla:
     class: Dist::Zilla::Dist::Builder
     config:
       is_trial: '0'
-    version: '5.020'
+    version: '5.024'

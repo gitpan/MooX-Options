@@ -12,11 +12,11 @@ package MooX::Options;
 
 use strict;
 use warnings;
-our $VERSION = '4.012';    # VERSION
+our $VERSION = '4.013';    # VERSION
 use Carp;
 
 my @OPTIONS_ATTRIBUTES
-    = qw/format short repeatable negativable autosplit doc long_doc order json/;
+    = qw/format short repeatable negativable autosplit autorange doc long_doc order json/;
 
 sub import {
     my ( undef, @import ) = @_;
@@ -161,10 +161,13 @@ sub _validate_and_filter_options {
     my (%options) = @_;
     $options{doc} = $options{documentation} if !defined $options{doc};
     $options{order} = 0 if !defined $options{order};
+    $options{autosplit} = ','
+        if !defined $options{autosplit} && $options{autorange};
 
     if ( $options{json} ) {
         delete $options{repeatable};
         delete $options{autosplit};
+        delete $options{autorange};
         delete $options{negativable};
         $options{format} = 's';
     }
@@ -197,7 +200,7 @@ MooX::Options - Explicit Options eXtension for Object Class
 
 =head1 VERSION
 
-version 4.012
+version 4.013
 
 =head1 DESCRIPTION
 
@@ -450,6 +453,30 @@ It will also handle quoted params with the autosplit.
   option testStr => (is => 'ro', format => 's@', default => sub {[]}, autosplit => ',');
 
   myTool --testStr='a,b,"c,d",e,f' # testStr ("a", "b", "c,d", "e", "f")
+
+=head2 autorange
+
+For another repeatable option you can add the autorange feature with your specific parameters. This 
+allows you to pass number ranges instead of passing each individual number.
+
+  option test => (is => 'ro', format => 'i@', default => sub {[]}, autorange => 1);
+  
+  myTool --test=1 --test=2 # test = (1, 2)
+  myTool --test=1,2,3      # test = (1, 2, 3)
+  myTool --test=1,2,3..6   # test = (1, 2, 3, 4, 5, 6)
+
+It will also handle quoted params like C<autosplit>, and will not rangify them.
+
+  option testStr => (is => 'ro', format => 's@', default => sub {[]}, autorange => 1);
+
+  myTool --testStr='1,2,"3,a,4",5' # testStr (1, 2, "3,a,4", 5)
+
+C<autosplit> will be set to ',' if undefined. You may set C<autosplit> to a different delimiter than ','
+for your group separation, but the range operator '..' cannot be changed. 
+
+  option testStr => (is => 'ro', format => 's@', default => sub {[]}, autorange => 1, autosplit => '-');
+
+  myTool --testStr='1-2-3-5..7' # testStr (1, 2, 3, 5, 6, 7) 
 
 =head2 short
 

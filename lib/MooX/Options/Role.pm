@@ -12,7 +12,7 @@ package MooX::Options::Role;
 use strict;
 use warnings;
 
-our $VERSION = '4.012';    # VERSION
+our $VERSION = '4.013';    # VERSION
 
 use MRO::Compat;
 use MooX::Options::Descriptive;
@@ -137,11 +137,21 @@ sub _options_fix_argv {
 
         if ( my $rec = $has_to_split->{$arg_name_without_dash} ) {
             $arg_values = shift @ARGV;
+            my $autorange
+                = defined $original_long_option
+                && exists $option_data->{$original_long_option}
+                && $option_data->{$original_long_option}{autorange};
             foreach my $record ( $rec->records($arg_values) ) {
 
                 #remove the quoted if exist to chain
                 $record =~ s/^['"]|['"]$//gx;
-                push @new_argv, $arg_name, $record;
+                if ($autorange) {
+                    push @new_argv,
+                        map { $arg_name => $_ } _expand_autorange($record);
+                }
+                else {
+                    push @new_argv, $arg_name, $record;
+                }
             }
         }
         else {
@@ -160,6 +170,24 @@ sub _options_fix_argv {
 
     return @new_argv;
 
+}
+
+sub _expand_autorange {
+    my ($arg_value) = @_;
+
+    my @expanded_arg_value;
+    my ( $left_figure, $autorange_found, $right_figure )
+        = $arg_value =~ /^(\d*)(\.\.)(\d*)$/x;
+    if ($autorange_found) {
+        $left_figure = $right_figure
+            if !defined $left_figure || !length($left_figure);
+        $right_figure = $left_figure
+            if !defined $right_figure || !length($right_figure);
+        if ( defined $left_figure && defined $right_figure ) {
+            push @expanded_arg_value, $left_figure .. $right_figure;
+        }
+    }
+    return @expanded_arg_value ? @expanded_arg_value : $arg_value;
 }
 
 ### PRIVATE
@@ -405,7 +433,7 @@ MooX::Options::Role - role that is apply to your object
 
 =head1 VERSION
 
-version 4.012
+version 4.013
 
 =head1 METHODS
 
